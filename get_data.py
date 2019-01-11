@@ -37,7 +37,7 @@ task_url_base = "https://eyewire.org/1.0/task/{}"+access_appendix
 if not os.path.isdir("images"):
     os.mkdir("images")
 if not os.path.isdir("segmentation"):
-    os.mkdir("segmentaion")
+    os.mkdir("segmentation")
 
 if args.cell_id is not None:
     cell_url = cell_url_base.format(args.cell_id)
