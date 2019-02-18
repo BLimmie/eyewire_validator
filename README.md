@@ -67,3 +67,4 @@ Here are a list of challenges associated with this project
   * Doug Bland: Moral support
 * Princeton University - Seung Laboratory: Maintaining Eyewire to be an awesome citizen science game and for developers to work on my requests
 * MIT: Building Eyewire
+* Professor Yu-Xiang Wang: Providing insight into segmentation and how to create a model
