@@ -49,6 +49,8 @@ Here are a list of challenges associated with this project
 
 * There is a subset of cells and images from the brain stems of a zebrafish that are not the same size as rat's retina images.
 
+* External hard drive transfer speeds are capped so running scripts off it is time consuming
+
 ## Solutions Summary
 
 * To remedy the cost of memory, I downsample both images and segmentation by a factor of 4 on each dimension to retain some detail. I am only looking for an approximation of the final annotation.
@@ -57,7 +59,9 @@ Here are a list of challenges associated with this project
 
 * After gathering the images, I merge them all into 3d numpy arrays and compress them using the lzma compression library.
 
-* We remove all zebrafish cells from the data. Eyewire is already developing an agent for this called MSTY.
+* I remove all zebrafish cells from the data. Eyewire is already developing an agent for this called MSTY.
+
+* I use my secondary laptop with lots of disk space to help preprocess some of the data
 
 ## Credits
 
