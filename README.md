@@ -82,8 +82,6 @@ Images are downsampled by taking the mean of each 4x4x4 block. Using skimage's d
 
 ### Using asyncio and multiprocessing
 
-### LZMA
-
 ## Bayesian Deep Learning
 
 Bayesian deep learning is new method of deep learning that deals with the problem of uncertainty. Take a model that tries to classify dogs and cats. What would the model output if it came across this image?
