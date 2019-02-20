@@ -57,7 +57,7 @@ Here are a list of challenges associated with this project
 
 * There is a subset of cells and images from the brain stems of a zebrafish that are not the same size as rat's retina images.
 
-* External hard drive transfer speeds are capped so running scripts off it is time consuming
+* External hard drive transfer speeds are capped so running scripts off it is time consuming. Windows also has this amazing feature that shuts off a hard drive if it uses too much power.
 
 ## Solutions Summary
 
