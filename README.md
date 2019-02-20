@@ -127,7 +127,7 @@ def func_(val):
   
 list = [#things]
 with multiprocessing.Pool(np) as p:
-  results = p.map(func, list)
+  results = list(tqdm.tqdm(p.imap(func, list), total=len(list))
 ```
 
 Asyncio is not controllable, so it is impossible to throttle the speed. Since the Eyewire API is connected to the game, HTTP requests slow down the game and data collection. This is when multiprocessing has to be used. Asyncio and multiprocessing were used in the data gathering step and preprocessing steps.
