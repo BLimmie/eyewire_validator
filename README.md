@@ -111,6 +111,7 @@ In the case of binary classification, our output (ŷ) is within the range (0,1),
 <p align="center">
   <img src="https://i.imgur.com/UKOWaJb.gif" title="AHHHH MORE COMPLEX EQUATIONS" />
 </p>
+
 Where σ is the sigmoid function
 
 
