@@ -102,12 +102,15 @@ In the case of binary classification, our output (ŷ) is within the range (0,1),
 
 * Probability of output given ŷ, u
 
-<img src="https://latex.codecogs.com/gif.latex?P(\^{y},&space;u)&space;=&space;\sigma\(\frac{\^{y}}{u}\)" title="Oh god complex equations" />
+<p align="center">
+  <img src="https://latex.codecogs.com/gif.latex?P(\^{y},&space;u)&space;=&space;\sigma\(\frac{\^{y}}{u}\)" title="Oh god complex equations" />
+</p>
 
 * Loss of output given ŷ, u, and ground truth (y)
 
-<img src="https://i.imgur.com/UKOWaJb.gif" title="AHHHH MORE COMPLEX EQUATIONS" />
-
+<p align="center">
+  <img src="https://i.imgur.com/UKOWaJb.gif" title="AHHHH MORE COMPLEX EQUATIONS" />
+</p>
 Where σ is the sigmoid function
 
 The result of these equations is that as uncertainty increases, P(ŷ, u) approaches 0.5 and cancels out the logit output ŷ. The sigmoid function is a very sensitive function, making inputs just outside 0 approach either a 0 or 1 probability. Therefore, learning an uncertainty term allows the model to make a guess without being penalized too heavily. We can also derive insight from the uncertainty term itself.
