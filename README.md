@@ -82,7 +82,7 @@ Ideally, there would be a 3rd category that has a label of neither dog nor cat, 
 In the case of binary classification, our output (y) is within the range (0,1), and our uncertainty (u) is within the range \[1, inf). Our equations are given as follows, where P(y,u) is the probability given the output of our model.
 
 <img src="https://latex.codecogs.com/gif.latex?P(\^{y},&space;u)&space;=&space;\sigma\(\frac{\^{y}}{u}\)" />
-![AHHHH COMPLEX EQUATIONS](https://latex.codecogs.com/gif.latex?loss%28%5Chat%7By%7D%2C%20u%2C%20y%29%20%3D%20-%7B%28y%5Clog%7B%28%5Csigma%28%5Cfrac%7B%5Chat%7By%7D%7D%7Bu%7D%29%29%7D%20&plus;%20%281%20-%20y%29%5Clog%7B%281%20-%20%5Csigma%28%5Cfrac%7B%5Chat%7By%7D%7D%7Bu%7D%29%29%7D%29%7D)
+<img src="https://latex.codecogs.com/gif.latex?\inline&space;loss(\hat{y},&space;u,&space;y)&space;=&space;-{(y\log{(\sigma(\frac{\hat{y}}{u}))}&space;&plus;&space;(1&space;-&space;y)\log{(1&space;-&space;\sigma(\frac{\hat{y}}{u}))})}" title="loss(\hat{y}, u, y) = -{(y\log{(\sigma(\frac{\hat{y}}{u}))} + (1 - y)\log{(1 - \sigma(\frac{\hat{y}}{u}))})}" />
 
 ## Credits
 
