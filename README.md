@@ -117,6 +117,13 @@ Where σ is the sigmoid function
 
 The result of these equations is that as uncertainty increases, P(ŷ, u) approaches 0.5 and cancels out the logit output ŷ. The sigmoid function is a very sensitive function, making inputs just outside 0 approach either a 0 or 1 probability. Therefore, learning an uncertainty term allows the model to make a guess without being penalized too heavily. We can also derive insight from the uncertainty term itself.
 
+## Future Work
+
+* Train the model on AWS
+* Train the model using several n-grams of images, tuning for best accuracy
+* Gather metrics from training
+* Built resulting visuals
+
 ## Credits
 
 * Eyewire: Providing the resources for this project
