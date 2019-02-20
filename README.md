@@ -88,6 +88,53 @@ Images are downsampled by taking the mean of each 4x4x4 block. Using skimage's d
 
 TODO. Lots of sample code is needed in this section
 
+Processing large amounts of data sequentially is extremely time consuming especially with the additional cost of HTTP requests. To combat that, we have to run parallel processes using python's asyncio and multiprocessing libraries.
+
+Asyncio skeleton code
+```
+def func_(*args):
+  # do things
+  return result
+
+async def func(list, *args):
+  loop = asyncio.get_event_loop()
+  futures = [
+    loop.run_in_executor(
+      None,
+      func_,
+      item,
+      args*
+    )
+    for item in list
+  ]
+  results = [await f for f 
+             in tqdm.tqdm(asyncio.as_completed(tasks), 
+             total=len(tasks))]
+             
+  for result in results:
+    #do things
+
+if __name__ == "__main__":
+  list = [#things]
+  loop = asyncio.get_event_loop()
+  loop.run_until_complete(func(list))
+```
+
+Multiprocessing skeleton code
+```
+def func_(val):
+  # do things
+  time.sleep(n)
+  return result
+  
+list = [#things]
+with multiprocessing.Pool(np) as p:
+  results = p.map(list)
+```
+
+Asyncio is not controllable, so it is impossible to throttle the speed. Since the Eyewire API is connected to the game, HTTP requests slow down the game and data collection. This is when multiprocessing has to be used.
+
+tqdm is a library that displays pretty progress bars. I highly recommend it for any script dealing with large loops.
 ## Bayesian Deep Learning
 
 Bayesian deep learning is new method of deep learning that deals with the problem of uncertainty. Take a model that tries to classify dogs and cats. What would the model output if it came across this image?
