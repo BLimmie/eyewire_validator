@@ -22,7 +22,7 @@ Eyewire is a citizen science game where players map individual neurons in a rat'
 In Eyewire, players are given a 256x256x256 segmented 3D image (called a cube) containing a set of seed segments propogated from previous tasks. Players are to propogate (a.k.a. tracing) the seed and find the missing segments in the cube, giving Eyewire the nickname "adult coloring." As players play individual cubes, their traces are aggregated into a consensus and marked as the combined trace of the playerbase.
 
 <p align="center">
-  <img src="http://wiki.eyewire.org:88/images/thumb/4/4a/1.png/800px-1.png" title="Eyewire: How to Play" />
+  <img src="http://wiki.eyewire.org:88/images/thumb/4/4a/1.png/800px-1.png" title="Now that you know how to play, go join the Eyewire community" />
 </p>
 
 After 3 players have played a single cube, the cube is then marked to be checked by more established players known as Scythes. Scythes have full override powers of tasks, being able to fix any mistake that the consensus has. It takes 2 Scythes to mark a cube as complete. After a cube is marked as complete and a whole neuron has been traced, 1-2 administrators (Eyewire/Seung Lab employees) are tasked with validating the full trace again to make sure there are no mistakes. 
