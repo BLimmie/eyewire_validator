@@ -21,7 +21,9 @@ Eyewire is a citizen science game where players map individual neurons in a rat'
 ### The Eyewire Task Pipeline
 In Eyewire, players are given a 256x256x256 segmented 3D image (called a cube) containing a set of seed segments propogated from previous tasks. Players are to propogate (a.k.a. tracing) the seed and find the missing segments in the cube, giving Eyewire the nickname "adult coloring." As players play individual cubes, their traces are aggregated into a consensus and marked as the combined trace of the playerbase.
 
-![Eyewire: How to Play](http://wiki.eyewire.org:88/images/thumb/4/4a/1.png/800px-1.png)
+<p align="center">
+  <img src="http://wiki.eyewire.org:88/images/thumb/4/4a/1.png/800px-1.png" title="Eyewire: How to Play" />
+</p>
 
 After 3 players have played a single cube, the cube is then marked to be checked by more established players known as Scythes. Scythes have full override powers of tasks, being able to fix any mistake that the consensus has. It takes 2 Scythes to mark a cube as complete. After a cube is marked as complete and a whole neuron has been traced, 1-2 administrators (Eyewire/Seung Lab employees) are tasked with validating the full trace again to make sure there are no mistakes. 
 
@@ -40,7 +42,9 @@ Here are a list of problems that are present in the current Eyewire Task Pipelin
 
 * The segmentation algorithm's errors propogate to the players. There are many instances of mergers through the dataset, causing players to mistakenly add additional segments to a trace. The default procedure is to remove all segments that contain significant mergers to avoid multiple segments being classified as part of 2 different neurons.
 
-![Eyewire: Merger Example](http://wiki.eyewire.org:88/images/thumb/9/9c/No_borders2.png/800px-No_borders2.png)
+<p align="center">
+  <img src="http://wiki.eyewire.org:88/images/thumb/9/9c/No_borders2.png/800px-No_borders2.png" title="Tracing mergers is the chaotic evil of Eyewire" />
+</p>
 
 ## Challenges
 Here are a list of challenges associated with this project
@@ -76,8 +80,8 @@ Segmentations of volumes are downsampled to a size of 64x64x64 by taking the max
 Images are downsampled by taking the mean of each 4x4x4 block. Using skimage's downsample_local_mean function, we can quickly do that. 
 
 <p float="left">
-  <img src="https://storage.googleapis.com/e2198_compressed/Volume-71141-71142/jpg/0.jpg" width="49%" />
-  <img src="https://i.imgur.com/NTVp4Hx.jpg" width="49%" /> 
+  <img src="https://storage.googleapis.com/e2198_compressed/Volume-71141-71142/jpg/0.jpg" width="49%" title="20/20 vision" />
+  <img src="https://i.imgur.com/NTVp4Hx.jpg" width="49%" title="20/200 vision" /> 
 </p>
 
 ### Using asyncio and multiprocessing
@@ -86,7 +90,9 @@ Images are downsampled by taking the mean of each 4x4x4 block. Using skimage's d
 
 Bayesian deep learning is new method of deep learning that deals with the problem of uncertainty. Take a model that tries to classify dogs and cats. What would the model output if it came across this image?
 
-![Dogcat? Catdog? Let's just call it a monster](https://github.com/kyle-dorman/bayesian-neural-network-blogpost/blob/master/blog_images/catdog.png?raw=true)
+<p align="center">
+  <img src="https://github.com/kyle-dorman/bayesian-neural-network-blogpost/blob/master/blog_images/catdog.png?raw=true" title="Dogcat? Catdog? Let's just call it a monster" />
+</p>
 
 Ideally, there would be a 3rd category that has a label of neither dog nor cat, but adding that label would cost additional data collection. The solution is for the model to output both the classification and an uncertainly value. We can train the model with a loss function that penalizes uncertainty (u) by adding log(u) to the loss function when the original prediction is adjusted for u. 
 
@@ -94,11 +100,11 @@ In the case of binary classification, our output (ŷ) is within the range (0,1),
 
 * Probability of output given ŷ, u
 
-<img src="https://latex.codecogs.com/gif.latex?P(\^{y},&space;u)&space;=&space;\sigma\(\frac{\^{y}}{u}\)" />
+<img src="https://latex.codecogs.com/gif.latex?P(\^{y},&space;u)&space;=&space;\sigma\(\frac{\^{y}}{u}\)" title="Oh god complex equations" />
 
 * Loss of output given ŷ, u, and ground truth (y)
 
-<img src="https://i.imgur.com/UKOWaJb.gif" />
+<img src="https://i.imgur.com/UKOWaJb.gif" title="AHHHH MORE COMPLEX EQUATIONS" />
 
 Where σ is the sigmoid function
 
