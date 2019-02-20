@@ -76,8 +76,8 @@ Segmentations of volumes are downsampled to a size of 64x64x64 by taking the max
 Images are downsampled by taking the mean of each 4x4x4 block. Using skimage's downsample_local_mean function, we can quickly do that. 
 
 <p float="left">
-  <img src="https://storage.googleapis.com/e2198_compressed/Volume-71141-71142/jpg/0.jpg" width="50%" />
-  <img src="https://i.imgur.com/NTVp4Hx.jpg" width="50%" /> 
+  <img src="https://storage.googleapis.com/e2198_compressed/Volume-71141-71142/jpg/0.jpg" width="49%" />
+  <img src="https://i.imgur.com/NTVp4Hx.jpg" width="49%" /> 
 </p>
 
 ### Using asyncio and multiprocessing
