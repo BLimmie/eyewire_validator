@@ -8,11 +8,15 @@ Eyewire is a citizen science game where players map individual neurons in a rat'
 ## Summary of Eyewire and Terms
 
 ### Terms
-* Cube: A 3D image stack given to players as a task
+* Volume: A 3D image stack
+* Seed: The initial segments in a cube
+* Cube: A 3D image stack and seed given to players as a task
+* Task: See Cube
 * Trace: The act of propogating the seed to find missing segments within a cube
 * Scythe: A high-ranking, established Eyewire player, given additional responsibilities of validating individual cubes
 * Reap: Using a scythe's override powers to fix a cube
 * Merger: A segment that contains volumes of two different neurons
+
 
 ### The Eyewire Task Pipeline
 In Eyewire, players are given a 256x256x256 segmented 3D image (called a cube) containing a set of seed segments propogated from previous tasks. Players are to propogate (a.k.a. tracing) the seed and find the missing segments in the cube, giving Eyewire the nickname "adult coloring." As players play individual cubes, their traces are aggregated into a consensus and marked as the combined trace of the playerbase.
@@ -57,7 +61,7 @@ Here are a list of challenges associated with this project
 
 * Using a combination of asyncio and multiprocessing, I can set the transfer speed of the data gathered through the Eyewire API.
 
-* After gathering the images, I merge them all into 3d numpy arrays and compress them using the lzma compression library.
+* After gathering the images, I merge them all into 3D numpy arrays and compress them using the lzma compression library.
 
 * I remove all zebrafish cells from the data. Eyewire is already developing an agent for this called MSTY.
 
@@ -66,6 +70,12 @@ Here are a list of challenges associated with this project
 ## Solutions
 
 ### Downsample Images
+
+Segmentations of volumes are downsampled to a size of 64x64x64 by taking the max segment count in each subvolume of 4x4x4. This causes some tasks to not have any segments in the seed, so we have to remove those tasks. 
+
+Images are downsampled by taking the mean of each 4x4x4 block. Using skimage's downsample_local_mean function, we can quickly do that. 
+
+![](https://storage.googleapis.com/e2198_compressed/Volume-71141-71142/jpg/0.jpg) ![](https://i.imgur.com/NTVp4Hx.jpg)
 
 ### Using asyncio and multiprocessing
 
@@ -81,13 +91,17 @@ Ideally, there would be a 3rd category that has a label of neither dog nor cat, 
 
 In the case of binary classification, our output (ŷ) is within the range (0,1), and our uncertainty (u) is within the range \[1, inf). Our equations are given as follows:
 
-Probability of output given ŷ, u
+* Probability of output given ŷ, u
 
 <img src="https://latex.codecogs.com/gif.latex?P(\^{y},&space;u)&space;=&space;\sigma\(\frac{\^{y}}{u}\)" />
 
-Loss of output given ŷ, u, and ground truth (y)
+* Loss of output given ŷ, u, and ground truth (y)
 
-<img src="https://i.imgur.com/eiq0kbL.gif" />
+<img src="https://i.imgur.com/UKOWaJb.gif" />
+
+Where σ is the sigmoid function
+
+The result of these equations is that as uncertainty increases, P(ŷ, u) approaches 0.5 and cancels out the logit output ŷ. The sigmoid function is a very sensitive function, making inputs just outside 0 approach either a 0 or 1 probability. Therefore, learning an uncertainty term allows the model to make a guess without being penalized too heavily. We can also derive insight from the uncertainty term itself.
 
 ## Credits
 
