@@ -82,7 +82,7 @@ Ideally, there would be a 3rd category that has a label of neither dog nor cat, 
 In the case of binary classification, our output (y) is within the range (0,1), and our uncertainty (u) is within the range \[1, inf). Our equations are given as follows, where P(y,u) is the probability given the output of our model.
 
 <img src="https://latex.codecogs.com/gif.latex?P(\^{y},&space;u)&space;=&space;\sigma\(\frac{\^{y}}{u}\)" />
-![AHHHHH COMPLEX EQUATIONS](https://i.imgur.com/eiq0kbL.gif)
+<img src="https://i.imgur.com/eiq0kbL.gif" />
 
 ## Credits
 
