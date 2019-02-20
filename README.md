@@ -86,8 +86,6 @@ Images are downsampled by taking the mean of each 4x4x4 block. Using skimage's d
 
 ### Using asyncio and multiprocessing
 
-TODO. Lots of sample code is needed in this section
-
 Processing large amounts of data sequentially is extremely time consuming especially with the additional cost of HTTP requests. To combat that, we have to run parallel processes using python's asyncio and multiprocessing libraries.
 
 Asyncio skeleton code
