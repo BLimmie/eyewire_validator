@@ -91,7 +91,7 @@ TODO. Lots of sample code is needed in this section
 Processing large amounts of data sequentially is extremely time consuming especially with the additional cost of HTTP requests. To combat that, we have to run parallel processes using python's asyncio and multiprocessing libraries.
 
 Asyncio skeleton code
-```
+```python
 def func_(*args):
   # do things
   return result
@@ -121,7 +121,7 @@ if __name__ == "__main__":
 ```
 
 Multiprocessing skeleton code
-```
+```python
 def func_(val):
   # do things
   time.sleep(n)
