@@ -164,6 +164,7 @@ The result of these equations is that as uncertainty increases, P(ŷ, u) approac
 
 ## Future Work
 
+* Fix the recurrent portion of the model
 * Train the model on AWS
 * Train the model using several n-grams of images, tuning for best accuracy
 * Gather metrics from training
