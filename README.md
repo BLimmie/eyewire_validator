@@ -63,6 +63,26 @@ Here are a list of challenges associated with this project
 
 * I use my secondary laptop with lots of disk space to help preprocess some of the data
 
+## Solutions
+
+### Downsample Images
+
+### Using asyncio and multiprocessing
+
+### LZMA
+
+## Bayesian Deep Learning
+
+Bayesian deep learning is new method of deep learning that deals with the problem of uncertainty. Take a model that tries to classify dogs and cats. What would the model output if it came across this image?
+
+![Dogcat? Catdog? Let's just call it a monster](https://github.com/kyle-dorman/bayesian-neural-network-blogpost/blob/master/blog_images/catdog.png?raw=true)
+
+Ideally, there would be a 3rd category that has a label of neither dog nor cat, but adding that label would cost additional data collection. The solution is for the model to output both the classification and an uncertainly value. We can train the model with a loss function that penalizes uncertainty (u) by adding log(u) to the loss function when the original prediction is adjusted for u. 
+
+In the case of binary classification, our output (y) is within the range (0,1), and our uncertainty (u) is within the range \[1, inf). Our equations 
+<img src="https://latex.codecogs.com/gif.latex?P(y,&space;u)&space;=&space;\sigma\(\frac{y}{u}\)" title="P(y, u) = \sigma\(\frac{y}{u}\)" />
+
+
 ## Credits
 
 * Eyewire: Providing the resources for this project
