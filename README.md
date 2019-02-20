@@ -132,7 +132,7 @@ with multiprocessing.Pool(np) as p:
   results = p.map(list)
 ```
 
-Asyncio is not controllable, so it is impossible to throttle the speed. Since the Eyewire API is connected to the game, HTTP requests slow down the game and data collection. This is when multiprocessing has to be used.
+Asyncio is not controllable, so it is impossible to throttle the speed. Since the Eyewire API is connected to the game, HTTP requests slow down the game and data collection. This is when multiprocessing has to be used. Asyncio and multiprocessing were used in the data gathering step and preprocessing steps.
 
 tqdm is a library that displays pretty progress bars. I highly recommend it for any script dealing with large loops.
 ## Bayesian Deep Learning
