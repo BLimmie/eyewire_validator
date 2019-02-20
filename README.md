@@ -79,9 +79,14 @@ Bayesian deep learning is new method of deep learning that deals with the proble
 
 Ideally, there would be a 3rd category that has a label of neither dog nor cat, but adding that label would cost additional data collection. The solution is for the model to output both the classification and an uncertainly value. We can train the model with a loss function that penalizes uncertainty (u) by adding log(u) to the loss function when the original prediction is adjusted for u. 
 
-In the case of binary classification, our output (y) is within the range (0,1), and our uncertainty (u) is within the range \[1, inf). Our equations are given as follows, where P(y,u) is the probability given the output of our model.
+In the case of binary classification, our output (ŷ) is within the range (0,1), and our uncertainty (u) is within the range \[1, inf). Our equations are given as follows:
+
+Probability of output given ŷ, u
 
 <img src="https://latex.codecogs.com/gif.latex?P(\^{y},&space;u)&space;=&space;\sigma\(\frac{\^{y}}{u}\)" />
+
+Loss of output given ŷ, u, and ground truth (y)
+
 <img src="https://i.imgur.com/eiq0kbL.gif" />
 
 ## Credits
