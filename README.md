@@ -16,7 +16,18 @@ Eyewire is a citizen science game where players map individual neurons in a rat'
 * Scythe: A high-ranking, established Eyewire player, given additional responsibilities of validating individual cubes
 * Reap: Using a scythe's override powers to fix a cube
 * Merger: A segment that contains volumes of two different neurons
+* Harold: The rat's name
 
+### Eyewire
+
+Eyewire is a citizen science game designed to collect data about individual neurons in a rat's retina. Originally designed to create a segmentation algorithm for mapping the human brain, it has evolved into a complex data collection system based on the idea that getting ordinary people to play a game designed around annotating data creates a cost-effective way of annotating data that doesn't require the time and effort of people within the laboratories using the data nor the costly delegation of data annotation to services like Mechanical Turk. Currently, there are just over 3000 rat's neurons fully mapped within a 350×300×60 µm^3 volume. At this point in time, the data collected by Eyewire has discovered 6 new specific neuron types and has made a new classification scheme for retinal neurons.
+
+<p align="center">
+  <img src="http://wiki.eyewire.org:88/images/thumb/0/05/Countdown.png/800px-Countdown.png" title= "" />
+  245 of the 3000+ neurons mapped with blood vessels
+  <img src="https://i.imgur.com/LxxHDTS.jpg" title= "" width="70%" />
+  Vertical cross section of the dataset with a sample neuron
+</p>
 
 ### The Eyewire Task Pipeline
 In Eyewire, players are given a 256x256x256 segmented 3D image (called a cube) containing a set of seed segments propogated from previous tasks. Players are to propogate (a.k.a. tracing) the seed and find the missing segments in the cube, giving Eyewire the nickname "adult coloring." As players play individual cubes, their traces are aggregated into a consensus and marked as the combined trace of the playerbase.
