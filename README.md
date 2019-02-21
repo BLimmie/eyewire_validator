@@ -177,7 +177,7 @@ The gradients of the loss function for backpropagation are as follows:
 <p align="center">
   <img src="https://latex.codecogs.com/gif.latex?\frac{\partial&space;}{\partial&space;\hat{y}}&space;=&space;\frac{(y-1)&space;\left(-e^{\hat{y}/u}\right)-y}{u&space;\left(e^{\hat{y}/u}&plus;1\right)}" title="As the limit of the line number increases to infinity, the complexity of the math equations increases" />
   <br> <br>
-  <img src="https://latex.codecogs.com/gif.latex?\frac{\partial&space;}{\partial&space;u}&space;=&space;\frac{e^{\hat{y}/z}&space;(\hat{y}&space;(y-1)&plus;u)&plus;\hat{y}&space;y&plus;u}{u^2&space;\left(e^{\hat{y}/u}&plus;1\right)}" title="To be honest, I'm just adding the partial derivatives to make this seem more complicated than it really is" />
+  <img src="https://latex.codecogs.com/gif.latex?\frac{\partial}{\partial&space;u}&space;=&space;\frac{e^{\hat{y}/u}&space;(\hat{y}&space;(y-1)&space;&plus;&space;u)&plus;\hat{y}&space;y&space;&plus;u}{u^2&space;\left(e^{\hat{y}/u}&plus;1\right)}" title="To be honest, I'm just adding the partial derivatives to make this seem more complicated than it really is" />
 </p>
 
 The result of these equations is that as uncertainty increases, P(ŷ, u) approaches 0.5 and cancels out the logit output ŷ. The sigmoid function is a very sensitive function, making inputs just outside 0 approach either a 0 or 1 probability. Therefore, learning an uncertainty term allows the model to make a guess without being penalized too heavily. We can also derive insight from the uncertainty term itself.
