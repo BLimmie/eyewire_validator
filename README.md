@@ -169,10 +169,14 @@ In the case of binary classification, our output (ŷ) is within the range (0,1),
 
 <p align="center">
   <img src="https://i.imgur.com/UKOWaJb.gif" title="AHHHH MORE COMPLEX EQUATIONS" />
+<br>
+Where σ is the sigmoid function
 </p>
 
-Where σ is the sigmoid function
-
+The gradients of the loss function for backpropagation are as follows:
+<p align="center">
+<img src="https://latex.codecogs.com/gif.latex?\frac{\partial&space;}{\partial&space;x}&space;=&space;\frac{(y-1)&space;\left(-e^{\hat{y}/u}\right)-y}{u&space;\left(e^{\hat{y}/u}&plus;1\right)}" title="\frac{\partial }{\partial x} = \frac{(y-1) \left(-e^{\hat{y}/u}\right)-y}{u \left(e^{\hat{y}/u}+1\right)}" />
+</p>
 
 The result of these equations is that as uncertainty increases, P(ŷ, u) approaches 0.5 and cancels out the logit output ŷ. The sigmoid function is a very sensitive function, making inputs just outside 0 approach either a 0 or 1 probability. Therefore, learning an uncertainty term allows the model to make a guess without being penalized too heavily. We can also derive insight from the uncertainty term itself.
 
