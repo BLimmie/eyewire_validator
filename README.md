@@ -26,8 +26,8 @@ Eyewire is a citizen science game designed to collect data about individual neur
   <img src="http://wiki.eyewire.org:88/images/thumb/0/05/Countdown.png/800px-Countdown.png" title= "Remove the cell bodies and you get random noise" />
   <br>
   245 of the 3000+ neurons mapped with blood vessels
-  <br>
-  <img src="https://i.imgur.com/LxxHDTS.jpg" title= "This image is of utmost importance for this project. There will be a test on it." width="70%" />
+  <br><br>
+  <img src="https://i.imgur.com/LxxHDTS.jpg" title= "This image is of utmost importance. There will be a test on it." width="70%" />
   <br>
   Vertical cross section of the dataset with a sample neuron
 </p>
