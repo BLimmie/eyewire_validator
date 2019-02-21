@@ -16,7 +16,7 @@ Eyewire is a citizen science game where players map individual neurons in a rat'
 * Scythe: A high-ranking, established Eyewire player, given additional responsibilities of validating individual cubes
 * Reap: Using a scythe's override powers to fix a cube
 * Merger: A segment that contains volumes of two different neurons
-* Harold: The rat's name
+* Harold: The rat's name ![:harold:](https://cdn.discordapp.com/emojis/378078270803017730.png?v=1)
 
 ### Eyewire
 
