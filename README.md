@@ -202,3 +202,7 @@ The uncertainty term can even further be used to set a "maybe" threshold. If the
 * Princeton University - Seung Laboratory: Maintaining Eyewire to be an awesome citizen science game and for developers to work on my requests
 * MIT: Building Eyewire
 * Professor Yu-Xiang Wang: Providing insight into segmentation and how to create a model
+
+<p align="center">
+  <img src="https://i0.wp.com/blog.eyewire.org/wp-content/uploads/2018/03/ARTPRINT_ForScience_BLACK.jpg?resize=700%2C700&ssl=1" title="科学のために！" width = 70%>
+</p>
