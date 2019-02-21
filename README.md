@@ -182,6 +182,8 @@ The gradients of the loss function for backpropagation are as follows:
 
 The result of these equations is that as uncertainty increases, P(ŷ, u) approaches 0.5 and cancels out the logit output ŷ. The sigmoid function is a very sensitive function, making inputs just outside 0 approach either a 0 or 1 probability. Therefore, learning an uncertainty term allows the model to make a guess without being penalized too heavily. We can also derive insight from the uncertainty term itself.
 
+The uncertainty term can even further be used to set a "maybe" threshold. If the uncertainty is higher than a certain value, it gets assigned a maybe label, which would be the exact scenario we want from the merged dog and cat image. This creates an artificial 3rd label that doesn't require extra data specifically for that label.
+
 ## Future Work
 
 * Fix the recurrent portion of the model
@@ -189,6 +191,7 @@ The result of these equations is that as uncertainty increases, P(ŷ, u) approac
 * Train the model using several n-grams of images, tuning for best accuracy
 * Gather metrics from training
 * Built resulting visuals
+* Analyze color vs uncertainty (I expect darker colors to be more uncertain)
 
 ## Credits
 
