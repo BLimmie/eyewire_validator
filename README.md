@@ -200,8 +200,8 @@ The uncertainty term can even further be used to set a "maybe" threshold. If the
 
 * Eyewire: Providing the resources for this project
   * Amy Sterling: Connecting me to the development team, and for supporting me in building this project
-  * Chris Jordan: Creating the OAuth API authentication for me to connect to the API without using a logged in browser
-  * Doug Bland: Moral support
+  * Chris Jordan: Creating the OAuth API authentication for me to connect to the API without using a logged in browser and providing API documentation support
+  * Doug Bland: Moral support 
 * Princeton University - Seung Laboratory: Maintaining Eyewire to be an awesome citizen science game and for developers to work on my requests
 * MIT: Building Eyewire
 * Professor Yu-Xiang Wang: Providing insight into segmentation and how to create a model
