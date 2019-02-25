@@ -3,7 +3,7 @@
 Project By: Brian Lim
 
 <p align="center">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/8/8d/EyeWire-Logo-Blue.png" title="Hooking up jumper cables to my eyeballs is now an potential nightmare" />
+  <img src="https://upload.wikimedia.org/wikipedia/commons/8/8d/EyeWire-Logo-Blue.png" title="Hooking up jumper cables to my eyeballs is now an potential nightmare" width= "50%"/>
 </p>
 
 ## Abstract
