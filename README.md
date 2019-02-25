@@ -2,11 +2,15 @@
 
 Project By: Brian Lim
 
+<p align="center">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/8/8d/EyeWire-Logo-Blue.png" title="Hooking up jumper cables to my eyeballs is now an potential nightmare" />
+</p>
+
 ## Abstract
 Eyewire is a citizen science game where players map individual neurons in a rat's retina. Using a relatively new method of deep learning called Bayesian Deep Learning, I create an agent to approximate the individual tasks (a.k.a. cubes) that human players complete as part of Eyewire. The architecture used in the model is a recurrent encoder-decoder network for 3D images. 3D images pose a huge challenge in memory/size restrictions, so methods dealing with those had to be engineered.
 
 ## Purpose
-This project is designed as an introduction to Bayesian Deep Learning and am invitation to join citizen Science efforts such as Eyewire.
+This project is designed as an introduction to Bayesian Deep Learning and am invitation to join citizen science efforts such as Eyewire.
 
 ## Summary of Eyewire and Terms
 
@@ -147,9 +151,10 @@ with multiprocessing.Pool(np) as p:
   results = list(tqdm.tqdm(p.imap(func, list), total=len(list))
 ```
 
-Asyncio is not controllable, so it is impossible to throttle the speed. Since the Eyewire API is connected to the game, HTTP requests slow down the game and data collection. This is when multiprocessing has to be used. Asyncio and multiprocessing were used in the data gathering step and preprocessing steps.
+The asyncio is not controllable, so it is difficult to throttle the speed. Since the Eyewire API is connected to the game, HTTP requests slow down the game and data collection. This is when multiprocessing has to be used. Asyncio and multiprocessing were used in the data gathering step and preprocessing steps.
 
 tqdm is a library that displays pretty progress bars. I highly recommend it for any script dealing with large loops.
+
 ## Bayesian Deep Learning
 
 Bayesian deep learning is new method of deep learning that deals with the problem of uncertainty. Take a model that tries to classify dogs and cats. What would the model output if it came across this image?
