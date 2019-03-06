@@ -3,7 +3,7 @@
 Project By: Brian Lim
 
 <p align="center">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/8/8d/EyeWire-Logo-Blue.png" title="Hooking up jumper cables to my eyeballs is now an potential nightmare" width= "50%"/>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/8/8d/EyeWire-Logo-Blue.png" title="Imagine your eyes hooked up to jumper cables" width= "50%"/>
 </p>
 
 ## Abstract
@@ -170,7 +170,7 @@ In the case of binary classification, our output (ŷ) is within the range (0,1),
 * Probability of output given ŷ, u
 
 <p align="center">
-  <img src="https://latex.codecogs.com/gif.latex?P(\^{y},&space;u)&space;=&space;\sigma\(\frac{\^{y}}{u}\)" title="Oh god complex equations" />
+  <img src="https://i.imgur.com/1CVpdVU.gif" title="Oh god complex equations" />
 </p>
 
 * Loss of output given ŷ, u, and ground truth (y)
@@ -183,22 +183,31 @@ In the case of binary classification, our output (ŷ) is within the range (0,1),
 
 The gradients of the loss function for backpropagation are as follows:
 <p align="center">
-  <img src="https://latex.codecogs.com/gif.latex?\frac{\partial&space;}{\partial&space;\hat{y}}&space;=&space;\frac{(y-1)&space;\left(-e^{\hat{y}/u}\right)-y}{u&space;\left(e^{\hat{y}/u}&plus;1\right)}" title="As the limit of the line number increases to infinity, the complexity of the math equations increases" />
+  <img src="https://i.imgur.com/EDo6yQl.gif" title="As the limit of the line number increases to infinity, the complexity of the math equations increases" />
   <br> <br>
-  <img src="https://latex.codecogs.com/gif.latex?\frac{\partial}{\partial&space;u}&space;=&space;\frac{e^{\hat{y}/u}&space;(\hat{y}&space;(y-1)&space;&plus;&space;u)&plus;\hat{y}&space;y&space;&plus;u}{u^2&space;\left(e^{\hat{y}/u}&plus;1\right)}" title="To be honest, I'm just adding the partial derivatives to make this seem more complicated than it really is" />
+  <img src="https://i.imgur.com/BI0dQyI.gif" title="To be honest, I'm just adding the partial derivatives to make this seem more complicated than it really is" />
 </p>
 
 The result of these equations is that as uncertainty increases, P(ŷ, u) approaches 0.5 and cancels out the logit output ŷ. The sigmoid function is a very sensitive function, making inputs just outside 0 approach either a 0 or 1 probability. Therefore, learning an uncertainty term allows the model to make a guess without being penalized too heavily. We can also derive insight from the uncertainty term itself.
 
 The uncertainty term can even further be used to set a "maybe" threshold. If the uncertainty is higher than a certain value, it gets assigned a maybe label, which would be the exact scenario we want from the merged dog and cat image. This creates an artificial 3rd label that doesn't require extra data specifically for that label.
 
+## The Model
+
+The model architecture is a recurrent lightweight U-Net. It consists of 2 Conv3D/ReLU/MaxPool layers, of which the outputs gets concatenated to the 2 ConvTranspose3D/ReLU layers. The output of that is fed into two 1x1x1 Conv3D layers to calculate the predicted output and uncertainty of each pixel.
+
+<p align="center">
+  <img src="https://i.imgur.com/PkrKZaz.png" title="This is so lightweight, it can actually fit on 12 GB of GPU RAM" />
+</p>
+
+The input confidence is defaulted to 1 for the seed and 10 for everywhere else as it hasn't been explored yet. The hope for this model is that on each loop, it will explore the surroundings of the current seed and decide what belongs, what doesn't belong, and what it is still uncertain about. We also input p previous ground truths, of which the null equivalent is all zeros, so that the model gets previous cubes for extra context.
+
+We loop n (default=4) number of times through the U-Net model plugging in the logits as the new seed and sigma as the new confidence. We hope the high confidence value on the initial iteration for non-seed pixels causes the model to ignore the initial values of 0 in the seed.   
+
 ## Future Work
 
-* Fix the recurrent portion of the model
-* Train the model on AWS
-* Train the model using several n-grams of images, tuning for best accuracy
 * Gather metrics from training
-* Built resulting visuals
+* Build resulting visuals
 * Analyze color vs uncertainty (I expect darker colors to be more uncertain)
 
 ## Credits
@@ -209,7 +218,7 @@ The uncertainty term can even further be used to set a "maybe" threshold. If the
   * Doug Bland: Moral support 
 * Princeton University - Seung Laboratory: Maintaining Eyewire to be an awesome citizen science game and for developers to work on my requests
 * MIT: Building Eyewire
-* Professor Yu-Xiang Wang: Providing insight into segmentation and how to create a model
+* Professor Yu-Xiang Wang: Providing insight into segmentation and how to create a model for the purposes of propagating a seed
 
 <p align="center">
   <img src="https://i0.wp.com/blog.eyewire.org/wp-content/uploads/2018/03/ARTPRINT_ForScience_BLACK.jpg?resize=700%2C700&ssl=1" title="科学のために！" width = 70%>
