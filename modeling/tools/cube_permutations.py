@@ -32,8 +32,36 @@ def rotations24(polycube):
     yield from rotations4(rot90(polycube, axis=2), 1)
     yield from rotations4(rot90(polycube, -1, axis=2), 1)
 
-def modulations(cube):
-    """yields all 96 modulations of a cube"""
+def permutations(cube):
+    """yields all 96 permutations of a cube"""
+    yield from rotations24(cube)
     yield from rotations24(np.flip(cube, 0))
     yield from rotations24(np.flip(cube, 1))
     yield from rotations24(np.flip(cube, 2))
+
+def single_rotations4(cube, axis, idx):
+    rot_idx = idx%4
+    return rot90(cube, rot_idx, axis)
+
+def single_rotations24(cube, idx):
+    rot_idx = idx%6
+    if rot_idx == 0:
+        return single_rotations4(cube, 0, idx)
+    elif rot_idx == 1:
+        return single_rotations4(rot90(cube, 2, axis=1), 0, idx)
+    elif rot_idx == 2:
+        return single_rotations4(rot90(cube, axis=1), 2, idx)
+    elif rot_idx == 3:
+        return single_rotations4(rot90(cube, -1, axis=1), 2, idx)
+    elif rot_idx == 4:
+        return single_rotations4(rot90(cube, axis=2), 1, idx)
+    elif rot_idx == 5:
+        return single_rotations4(rot90(cube, -1, axis=1), 2, idx)
+    return None
+
+def single_perm(cube, idx):
+    flip_idx = idx//24
+    if flip_idx == 0:
+        return single_rotations24(cube, idx).copy()
+    else:
+        return single_rotations24(np.flip(cube, flip_idx-1), idx).copy()
