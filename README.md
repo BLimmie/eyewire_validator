@@ -199,7 +199,7 @@ The uncertainty term can even further be used to set a "maybe" threshold. If the
 The model architecture is a recurrent lightweight U-Net. It consists of 2 Conv3D/ReLU/MaxPool layers, of which the outputs gets concatenated to the 2 ConvTranspose3D/ReLU layers. The output of that is fed into two 1x1x1 Conv3D layers to calculate the predicted output and uncertainty of each pixel.
 
 <p align="center">
-  <img src="https://i.imgur.com/PkrKZaz.png" title="This is so lightweight, it can actually fit on 12 GB of GPU RAM" />
+  <img src="https://i.imgur.com/0lV3Si8.png" title="This is so lightweight, it can actually fit on 12 GB of GPU RAM" />
 </p>
 
 The input confidence is defaulted to 1 for the seed and 10 for everywhere else as it hasn't been explored yet. The hope for this model is that on each loop, it will explore the surroundings of the current seed and decide what belongs, what doesn't belong, and what it is still uncertain about. We also input p previous ground truths, of which the null equivalent is all zeros, so that the model gets previous cubes for extra context.
