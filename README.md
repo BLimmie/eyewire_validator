@@ -284,12 +284,11 @@ What happens if we only loop through the model once?
 }
 ```
 
-We get better results? I guess the model is good enough on its first try that any additional tries, it second-guesses itself. We get such a small uncertainty on the first loop that a float rounds it to the minimum possible uncertainty. I think I like it when it loops more because it can be more uncertain.
+We get better results? I guess the model is good enough on its first try that any additional tries, it second-guesses itself. We get such a small uncertainty on the first loop that a float rounds it to the minimum possible uncertainty. I think I like it when the model loops more because it can be more uncertain. The first loop essentially negates the necessity of bayesian deep learning, and we want our model to know when it can be wrong.
 
 ## Future Work
 
-* Build resulting visuals
-* Switch model/loss to Monte Carlo Simulations
+* Switch model/loss to Monte Carlo Simulations and test
 
 ## Credits
 
