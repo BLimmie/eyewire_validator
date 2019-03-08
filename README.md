@@ -27,6 +27,7 @@ This project is designed as an introduction to Bayesian Deep Learning and am inv
 * Scythe: A high-ranking, established Eyewire player, given additional responsibilities of validating individual cubes
 * Reap: Using a scythe's override powers to fix a cube
 * Merger: A segment that contains volumes of two different neurons
+* Aggregate: The ground truth of a task based on the combined responses of many players. Interchangeable with "Ground Truth"
 * Harold: The rat's name
 
 ### Eyewire
