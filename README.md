@@ -262,7 +262,7 @@ First, I want to look at the uncertainty of differently shaded voxels, since the
 Because there are actually very few voxels where uncertainty is more than the minimum of 1, I opt for a scatter plot to show where any uncertainties lie at all. This doesn't show the concentration of uncertainties, but there is a clear range where uncertainties lie.
 
 <p align="center">
-  <img src="https://github.com/BLimmie/eyewire_validator/blob/master/images/uncertainty.png?raw=true" title="To be honest, I expected cooler results than \"The model works really ****ing well\""/>
+  <img src="https://github.com/BLimmie/eyewire_validator/blob/master/images/uncertainty.png?raw=true" title="To be honest, I expected cooler results than &quot;The model works really ****ing well&quot;"/>
 </p>
 
 Besides the anomaly of darkness = 0, we notice that the model only has uncertainty within a certain range of darker values and no uncertainty within much lighter values. This is somewhat strange since another potential area of error are membranes not being dyed, causing merger segments. I think the additional information of parent tasks makes the model certain about the direction of the neuron's growth.
