@@ -5,7 +5,7 @@ Project By: Brian Lim
 Note on the repository: This repository is meant to be a record of the various scripts used. It does not contain the data files necessary to run, nor does this repository note the required location of said data files. Some of the files are not runnable from the folder containing them in the repository and need to be placed in the same directory as the data. The tools directory is within the modeling folder; it was used with many of the data gathering scripts.
 
 <p align="center">
-  <a href="https://eyewire.org">
+  <a href="https://blog.eyewire.org" target="_blank">
     <img src="https://upload.wikimedia.org/wikipedia/commons/8/8d/EyeWire-Logo-Blue.png" title="Imagine your eyes hooked up to jumper cables" width= "50%"/>
   </a>
 </p>
@@ -206,13 +206,90 @@ The model architecture is a recurrent lightweight U-Net. It consists of 2 Conv3D
 
 The input confidence is defaulted to 1 for the seed and 10 for everywhere else as it hasn't been explored yet. The hope for this model is that on each loop, it will explore the surroundings of the current seed and decide what belongs, what doesn't belong, and what it is still uncertain about. We also input p previous ground truths, of which the null equivalent is all zeros, so that the model gets previous cubes for extra context.
 
-We loop n (default=4) number of times through the U-Net model plugging in the logits as the new seed and sigma as the new confidence. We hope the high confidence value on the initial iteration for non-seed pixels causes the model to ignore the initial values of 0 in the seed.   
+We loop n (default=4) number of times through the U-Net model plugging in the logits as the new seed and sigma as the new confidence. We hope the high confidence value on the initial iteration for non-seed voxels causes the model to ignore the initial values of 0 in the seed.   
+
+## Results and Analysis
+
+On the test set, we get the following results:
+```json
+{
+  "loss": 1.0000137219926748, 
+  "precision": 0.9998482499519548, 
+  "recall": 0.9997848688364814, 
+  "iou": 0.9996852392996376, 
+  "seedless_precision": 0.9997686750150999, 
+  "seedless_recall": 0.9997559129969251, 
+  "seedless_iou": 0.9995771374986273
+}
+```
+### Definitions
+
+#### Loss
+
+This is just a number used in the optimization of the model. Lower loss means the model fits better. This doesn't say much about how well the model does by itself, so we can ignore this value for most intents and purposes.
+
+#### Precision
+
+Precision is the percentage of voxels the model predicted to be positive in the ground truth that are actually positive in the ground truth.
+
+<p align="center">
+  <img src="https://i.imgur.com/LVko80D.gif" />
+</p>
+
+#### Recall
+
+Recall is the percentage of ground truth positive voxels that the model managed to predict
+
+<p align="center">
+  <img src="https://i.imgur.com/Z1uDiuc.gif" />
+</p>
+
+#### Intersection over Union (IOU)
+
+IOU is the volumetric intersection of positive guesses and ground truth positive voxels divided by the union of the two.
+
+<p align="center">
+  <img src="https://i.imgur.com/HTWhRdF.gif" />
+</p>
+
+### Analysis
+
+#### Uncertainty
+
+First, I want to look at the uncertainty of differently shaded voxels, since there is a known phenomenon within the dataset called a "black spill." A black spill is a volume of voxels where the dye accidentally spilled into the surrounding area instead of just the cell membrane. These voxels can be extremely difficult to trace through because there is no indication of where membranes are.
+
+Because there are actually very few voxels where uncertainty is more than the minimum of 1, I opt for a scatter plot to show where any uncertainties lie at all. This doesn't show the concentration of uncertainties, but there is a clear range where uncertainties lie.
+
+<p align="center">
+  <img src="https://github.com/BLimmie/eyewire_validator/blob/master/images/uncertainty.png?raw=true" />
+</p>
+
+Besides the anomaly of darkness = 0, we notice that the model only has uncertainty within a certain range of darker values and no uncertainty within much lighter values. This is somewhat strange since another potential area of error are membranes not being dyed, causing merger segments. I think the additional information of parent tasks makes the model certain about the direction of the neuron's growth.
+
+This matches the theory that black spills cause uncertainty.
+
+#### Loops = 1
+
+What happens if we only loop through the model once?
+
+```
+{
+  "loss": 1.0000137200649821, 
+  "precision": 0.9999090572150231, 
+  "recall": 0.9999214975016473, 
+  "iou": 0.9998205810386009, 
+  "seedless_precision": 0.9998980110984516, 
+  "seedless_recall": 0.9999177439668899, 
+  "seedless_iou": 0.9998057813872722
+}
+```
+
+We get better results? I guess the model is good enough on its first try that any additional tries, it second-guesses itself. We get such a small uncertainty on the first loop that a float rounds it to the minimum possible uncertainty. I think I like it when it loops more because it can be more uncertain.
 
 ## Future Work
 
-* Gather metrics from training
 * Build resulting visuals
-* Analyze color vs uncertainty (I expect darker colors to be more uncertain)
+* Switch model/loss to Monte Carlo Simulations
 
 ## Credits
 
