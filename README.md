@@ -5,7 +5,9 @@ Project By: Brian Lim
 Note on the repository: This repository is meant to be a record of the various scripts used. It does not contain the data files necessary to run, nor does this repository note the required location of said data files. Some of the files are not runnable from the folder containing them in the repository and need to be placed in the same directory as the data. The tools directory is within the modeling folder; it was used with many of the data gathering scripts.
 
 <p align="center">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/8/8d/EyeWire-Logo-Blue.png" title="Imagine your eyes hooked up to jumper cables" width= "50%"/>
+  <a href="https://eyewire.org">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/8/8d/EyeWire-Logo-Blue.png" title="Imagine your eyes hooked up to jumper cables" width= "50%"/>
+  </a>
 </p>
 
 ## Abstract
