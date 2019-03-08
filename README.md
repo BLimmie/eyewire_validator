@@ -11,7 +11,7 @@ Note on the repository: This repository is meant to be a record of the various s
 </p>
 
 ## Abstract
-Eyewire is a citizen science game where players map individual neurons in a rat's retina. Using a relatively new method of deep learning called Bayesian Deep Learning, I create an agent to approximate the individual tasks (a.k.a. cubes) that human players complete as part of Eyewire. The architecture used in the model is a recurrent encoder-decoder network for 3D images. 3D images pose a huge challenge in memory/size restrictions, so methods dealing with those had to be engineered.
+Eyewire is a citizen science game where players map individual neurons in a mouse's retina. Using a relatively new method of deep learning called Bayesian Deep Learning, I create an agent to approximate the individual tasks (a.k.a. cubes) that human players complete as part of Eyewire. The architecture used in the model is a recurrent encoder-decoder network for 3D images. 3D images pose a huge challenge in memory/size restrictions, so methods dealing with those had to be engineered.
 
 ## Purpose
 This project is designed as an introduction to Bayesian Deep Learning and am invitation to join citizen science efforts such as Eyewire.
@@ -28,11 +28,11 @@ This project is designed as an introduction to Bayesian Deep Learning and am inv
 * Reap: Using a scythe's override powers to fix a cube
 * Merger: A segment that contains volumes of two different neurons
 * Aggregate: The ground truth of a task based on the combined responses of many players. Interchangeable with "Ground Truth"
-* Harold: The rat's name
+* Harold: The mouse's name
 
 ### Eyewire
 
-Eyewire is a citizen science game designed to collect data about individual neurons in a rat's retina. Originally designed to create a segmentation algorithm for mapping the human brain, it has evolved into a complex data collection system based on the idea that getting ordinary people to play a game designed around annotating data creates a cost-effective way of annotating data that doesn't require the time and effort of people within the laboratories using the data nor the costly delegation of data annotation to services like Mechanical Turk. Currently, there are just over 3000 rat's neurons fully mapped within a 350×300×60 µm³ volume. At this point in time, the data collected by Eyewire has discovered 6 new specific neuron types and has made a new classification scheme for retinal neurons.
+Eyewire is a citizen science game designed to collect data about individual neurons in a mouse's retina. Originally designed to create a segmentation algorithm for mapping the human brain, it has evolved into a complex data collection system based on the idea that getting ordinary people to play a game designed around annotating data creates a cost-effective way of annotating data that doesn't require the time and effort of people within the laboratories using the data nor the costly delegation of data annotation to services like Mechanical Turk. Currently, there are just over 3000 mouse neurons fully mapped within a 350×300×60 µm³ volume. At this point in time, the data collected by Eyewire has discovered 6 new specific neuron types and has made a new classification scheme for retinal neurons.
 
 <p align="center">
   <img src="http://wiki.eyewire.org:88/images/thumb/0/05/Countdown.png/800px-Countdown.png" title= "Remove the cell bodies and you get random noise" />
@@ -81,7 +81,7 @@ Here are a list of challenges associated with this project
 
 * Images are stored as 256 individual 2D images, making file transfers and image loading an extremely costly operation.
 
-* There is a subset of cells and images from the brain stems of a zebrafish that are not the same size as rat's retina images.
+* There is a subset of cells and images from the brain stems of a zebrafish that are not the same size as mouse's retina images.
 
 * External hard drive transfer speeds are capped so running scripts off it is time consuming. Windows also has this amazing feature that shuts off a hard drive if it uses too much power.
 
