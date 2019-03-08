@@ -233,7 +233,7 @@ This is just a number used in the optimization of the model. Lower loss means th
 Precision is the percentage of voxels the model predicted to be positive in the ground truth that are actually positive in the ground truth.
 
 <p align="center">
-  <img src="https://i.imgur.com/LVko80D.gif" />
+  <img src="https://i.imgur.com/LVko80D.gif" title="How many arrows did you hit?"/>
 </p>
 
 #### Recall
@@ -241,7 +241,7 @@ Precision is the percentage of voxels the model predicted to be positive in the 
 Recall is the percentage of ground truth positive voxels that the model managed to predict
 
 <p align="center">
-  <img src="https://i.imgur.com/Z1uDiuc.gif" />
+  <img src="https://i.imgur.com/Z1uDiuc.gif" title="Of all the arrows that hit the target, how many are yours?"/>
 </p>
 
 #### Intersection over Union (IOU)
@@ -249,7 +249,7 @@ Recall is the percentage of ground truth positive voxels that the model managed 
 IOU is the volumetric intersection of positive guesses and ground truth positive voxels divided by the union of the two.
 
 <p align="center">
-  <img src="https://i.imgur.com/HTWhRdF.gif" />
+  <img src="https://i.imgur.com/HTWhRdF.gif" title="Over all the arrows you shot and arrows that hit the target, how many did you hit?"/>
 </p>
 
 ### Analysis
@@ -261,7 +261,7 @@ First, I want to look at the uncertainty of differently shaded voxels, since the
 Because there are actually very few voxels where uncertainty is more than the minimum of 1, I opt for a scatter plot to show where any uncertainties lie at all. This doesn't show the concentration of uncertainties, but there is a clear range where uncertainties lie.
 
 <p align="center">
-  <img src="https://github.com/BLimmie/eyewire_validator/blob/master/images/uncertainty.png?raw=true" />
+  <img src="https://github.com/BLimmie/eyewire_validator/blob/master/images/uncertainty.png?raw=true" title="To be honest, I expected cooler results than \"The model works really ****ing well\"/>
 </p>
 
 Besides the anomaly of darkness = 0, we notice that the model only has uncertainty within a certain range of darker values and no uncertainty within much lighter values. This is somewhat strange since another potential area of error are membranes not being dyed, causing merger segments. I think the additional information of parent tasks makes the model certain about the direction of the neuron's growth.
