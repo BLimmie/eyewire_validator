@@ -292,7 +292,6 @@ We get better results? I guess the model is good enough on its first try that an
 ## Future Work
 
 * Switch model/loss to Monte Carlo Simulations and test
-* Fix state loading on CPU
 
 ## How to use the model independently
 
