@@ -13,8 +13,8 @@ try:
 except:
     done = []
     for vol in vols:
-         if os.path.exists(os.path.join(vol, 'segmentation_new.lzma'):
-              done.append(vol)
+        if os.path.exists(os.path.join(vol, 'segmentation_new.lzma')):
+            done.append(vol)
 
 have_yet_tasks = [vol for vol in vols if vol not in done]
 
