@@ -305,7 +305,7 @@ from model.model import lwunet
 
 2. Load the state on a machine that can access a CUDA GPU. CPU is highly not recommended and might cause problems when loading the model.
 ```python
-state = torch.load('state.pth')
+state_dict = torch.load('state_dict.pth')
 ```
 
 3. Instantiate the model, load the weights, and prepare the model
@@ -313,7 +313,6 @@ state = torch.load('state.pth')
 model = lwunet(3,4)
 
 # load state dict
-state_dict = state['state_dict']
 if config['n_gpu'] > 1:
     model = torch.nn.DataParallel(model)
 model.load_state_dict(state_dict)
