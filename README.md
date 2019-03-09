@@ -341,8 +341,9 @@ def run(img, seed, prev, target=None):
     conf = np.where(seed==1, 1, 10)
     conf = torch.tensor(conf, dtype=torch.float)
     conf = conf.to(device)
-    target = torch.tensor(target, dtype=torch.float)
-    target = target.to(device)
+    if target is not None:
+        target = torch.tensor(target, dtype=torch.float)
+        target = target.to(device)
     prev = torch.tensor(prev, dtype=torch.float)
     prev = prev.to(device)
     
