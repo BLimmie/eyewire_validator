@@ -207,7 +207,9 @@ The model architecture is a recurrent lightweight U-Net. It consists of 2 Conv3D
 
 The input confidence is defaulted to 1 for the seed and 10 for everywhere else as it hasn't been explored yet. The hope for this model is that on each loop, it will explore the surroundings of the current seed and decide what belongs, what doesn't belong, and what it is still uncertain about. We also input p previous ground truths, of which the null equivalent is all zeros, so that the model gets previous cubes for extra context.
 
-We loop n (default=4) number of times through the U-Net model plugging in the logits as the new seed and sigma as the new confidence. We hope the high confidence value on the initial iteration for non-seed voxels causes the model to ignore the initial values of 0 in the seed.   
+We loop n (default=4) number of times through the U-Net model plugging in the logits as the new seed and sigma as the new confidence. We hope the high confidence value on the initial iteration for non-seed voxels causes the model to ignore the initial values of 0 in the seed.
+
+The model trained uses a previous size of 2 (trigram cubes) for additional information. 
 
 ## Results and Analysis
 
@@ -290,6 +292,75 @@ We get better results? I guess the model is good enough on its first try that an
 ## Future Work
 
 * Switch model/loss to Monte Carlo Simulations and test
+* Fix state loading on CPU
+
+## How to use the model independently
+
+1. Import pytorch, numpy, and the model arch
+```python
+import torch
+import numpy as np
+from model.model import lwunet
+```
+
+2. Load the state on a machine that can access a CUDA GPU. CPU is highly not recommended and might cause problems when loading the model.
+```python
+state = torch.load('state.pth')
+```
+
+3. Instantiate the model, load the weights, and prepare the model
+```python
+model = lwunet(3,4)
+
+# load state dict
+state_dict = state['state_dict']
+if config['n_gpu'] > 1:
+    model = torch.nn.DataParallel(model)
+model.load_state_dict(state_dict)
+
+# prepare model
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+model = model.to(device)
+model.eval()
+```
+
+4. Gather inputs and feed into model
+```python
+def run(img, seed, prev, target=None):
+    """
+    inputs are np.ndarrays, and the batch size is n (1 unless running multiple inputs at once)
+    Sizes:
+    img [nx64x64x64]
+    seed [nx64x64x64]
+    prev [nx2x64x64x64]
+    target [nx1x64x64x64] or None if there is no use for the aggregate
+    """
+    img = torch.tensor(img, dtype=torch.float)
+    img = img.to(device)
+    seed = torch.tensor(seed, dtype=torch.float)
+    seed = seed.to(device)
+    
+    conf = np.where(seed==1, 1, 10)
+    conf = torch.tensor(conf, dtype=torch.float)
+    conf = conf.to(device)
+    target = torch.tensor(target, dtype=torch.float)
+    target = target.to(device)
+    prev = torch.tensor(prev, dtype=torch.float)
+    prev = prev.to(device)
+    
+    logits, sigma = model(img, seed, conf, prev)
+    
+    return logits, sigma
+```
+
+See <data_scripts/downsample_images.py> and <data_scripts/downsample_segment.py> for examples in how to downsample segmentation and images from 256x256x256 to 64x64x64.
+
+See <modeling/tools/create_data.py> for examples in how to generate the image, seed, ground truth, and previous arrays.
+
+5. Return to numpy array
+```python
+logits, sigma = logits.cpu().numpy(), sigma.cpu().numpy()
+```
 
 ## Credits
 
