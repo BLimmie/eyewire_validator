@@ -353,9 +353,9 @@ def run(img, seed, prev, target=None):
     return logits, sigma
 ```
 
-See data_scripts/downsample_images.py and data_scripts/downsample_segment.py for examples in how to downsample segmentation and images from 256x256x256 to 64x64x64.
+See [downsample_images.py](data_scripts/downsample_images.py) and [downsample_segment.py](data_scripts/downsample_segment.py) for examples in how to downsample segmentation and images from 256x256x256 to 64x64x64.
 
-See modeling/tools/create_data.py for examples in how to generate the image, seed, ground truth, and previous arrays.
+See [create_data.py](modeling/tools/create_data.py) for examples in how to generate the image, seed, ground truth, and previous arrays.
 
 5. Return to numpy array
 ```python
