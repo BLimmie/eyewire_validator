@@ -216,13 +216,31 @@ The model trained uses a previous size of 2 (trigram cubes) for additional infor
 On the test set, we get the following results:
 ```json
 {
-  "loss": 1.0000137219926748, 
-  "precision": 0.9998482499519548, 
-  "recall": 0.9997848688364814, 
-  "iou": 0.9996852392996376, 
-  "seedless_precision": 0.9997686750150999, 
-  "seedless_recall": 0.9997559129969251, 
-  "seedless_iou": 0.9995771374986273
+  "loss": 1.0000137143301788, 
+  "precision": 0.9996331187884362, 
+  "recall": 0.999607809239787, 
+  "iou": 0.9994934872954645, 
+  "seedless_precision": 0.7455424629880024, 
+  "seedless_recall": 0.9998307692043708, 
+  "seedless_iou": 0.9865256681720843,
+  "count_guesses": 272979968.0, 
+  "count_gt": 272978784.0, 
+  "count_intersection": 272942176.0, 
+  "count_union": 273016352.0, 
+  "count_seedless_guesses": 78767688.0, 
+  "count_seedless_gt": 78762184.0, 
+  "count_seedless_intersection": 78731656.0, 
+  "count_seedless_union": 78798056.0
+}
+
+Aggregate Metrics:
+{
+  "agg_precision": 0.999861557607040,
+  "agg_recall": 0.999865894339979,
+  "agg_iou": 0.999728309313868,
+  "agg_seedless_precision": 0.999542553540482,
+  "agg_seedless_recall": 0.999612402825193,
+  "agg_seedless_iou": 0.999157339617616
 }
 ```
 ### Definitions
@@ -254,6 +272,14 @@ IOU is the volumetric intersection of positive guesses and ground truth positive
 <p align="center">
   <img src="https://i.imgur.com/HTWhRdF.gif" title="Over all the arrows you shot and arrows that hit the target, how many did you hit?"/>
 </p>
+
+#### Seedless Metrics
+
+Seedless metrics are ignoring any voxel in either the ground truth or the guess that belonged to the seed. It should be easy to determine that the seed stays, so we ignore it.
+
+#### Aggregate Metrics
+
+Instead of averaging over all trials, we take the total counts and calculate the individual metrics. This will show a more accurate representation of the metrics.
 
 ### Analysis
 
@@ -292,7 +318,7 @@ We get better results? I guess the model is good enough on its first try that an
 ## Future Work
 
 * Switch model/loss to Monte Carlo Simulations and test
-* Fix state loading on CPU
+* Update with aggregate metrics for loop=1 (the p2.xlarge server used to run this is starting to empty my wallet)
 
 ## How to use the model independently
 
@@ -305,7 +331,7 @@ from model.model import lwunet
 
 2. Load the state on a machine that can access a CUDA GPU. CPU is highly not recommended and might cause problems when loading the model.
 ```python
-state = torch.load('state.pth')
+state_dict = torch.load('state_dict.pth')
 ```
 
 3. Instantiate the model, load the weights, and prepare the model
@@ -313,7 +339,6 @@ state = torch.load('state.pth')
 model = lwunet(3,4)
 
 # load state dict
-state_dict = state['state_dict']
 if config['n_gpu'] > 1:
     model = torch.nn.DataParallel(model)
 model.load_state_dict(state_dict)
@@ -343,8 +368,9 @@ def run(img, seed, prev, target=None):
     conf = np.where(seed==1, 1, 10)
     conf = torch.tensor(conf, dtype=torch.float)
     conf = conf.to(device)
-    target = torch.tensor(target, dtype=torch.float)
-    target = target.to(device)
+    if target is not None:
+        target = torch.tensor(target, dtype=torch.float)
+        target = target.to(device)
     prev = torch.tensor(prev, dtype=torch.float)
     prev = prev.to(device)
     
@@ -352,6 +378,8 @@ def run(img, seed, prev, target=None):
     
     return logits, sigma
 ```
+
+Prediction is based on the logits
 
 See [downsample_images.py](data_scripts/downsample_images.py) and [downsample_segment.py](data_scripts/downsample_segment.py) for examples in how to downsample segmentation and images from 256x256x256 to 64x64x64.
 
