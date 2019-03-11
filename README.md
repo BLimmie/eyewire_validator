@@ -297,6 +297,14 @@ Besides the anomaly of darkness = 0, we notice that the model only has uncertain
 
 This matches the theory that black spills cause uncertainty.
 
+#### Metrics Distribution
+
+<p float="left">
+  <img src="https://github.com/BLimmie/eyewire_validator/blob/master/images/precision.png?raw=true" width="33%" title="" />
+  <img src="https://github.com/BLimmie/eyewire_validator/blob/master/images/recall.png?raw=true" width="33%" title="" />
+  <img src="https://github.com/BLimmie/eyewire_validator/blob/master/images/iou.png?raw=true" width="33%" title="" />
+</p>
+
 #### Loops = 1
 
 What happens if we only loop through the model once?
