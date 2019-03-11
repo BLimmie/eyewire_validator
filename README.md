@@ -6,7 +6,7 @@ Note on the repository: This repository is meant to be a record of the various s
 
 <p align="center">
   <a href="https://blog.eyewire.org" target="_blank">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/8/8d/EyeWire-Logo-Blue.png" title="Imagine your eyes hooked up to jumper cables" width= "50%"/>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/8/8d/EyeWire-Logo-Blue.png" title="This image takes you to Eyewire. Please join citizen science efforts such as this!" width= "50%"/>
   </a>
 </p>
 
@@ -199,7 +199,7 @@ The uncertainty term can even further be used to set a "maybe" threshold. If the
 
 ## The Model
 
-The model architecture is a recurrent lightweight U-Net. It consists of 2 Conv3D/ReLU/MaxPool layers, of which the outputs gets concatenated to the 2 ConvTranspose3D/ReLU layers. The output of that is fed into two 1x1x1 Conv3D layers to calculate the predicted output and uncertainty of each pixel.
+The model architecture is a recurrent lightweight U-Net ("lwunet" for short). It consists of 2 Conv3D/ReLU/MaxPool layers, of which the outputs gets concatenated to the 2 ConvTranspose3D/ReLU layers. The output of that is fed into two 1x1x1 Conv3D layers to calculate the predicted output and uncertainty of each pixel.
 
 <p align="center">
   <img src="https://i.imgur.com/0lV3Si8.png" title="This is so lightweight, it can actually fit on 12 GB of GPU RAM" />
@@ -211,7 +211,7 @@ We loop n (default=4) number of times through the U-Net model plugging in the lo
 
 The model trained uses a previous size of 2 (trigram cubes) for additional information. 
 
-## Results and Analysis
+## Results
 
 On the test set, we get the following results:
 ```json
@@ -223,14 +223,14 @@ On the test set, we get the following results:
   "seedless_precision": 0.7455424629880024, 
   "seedless_recall": 0.9998307692043708, 
   "seedless_iou": 0.9865256681720843,
-  "count_guesses": 272979968.0, 
-  "count_gt": 272978784.0, 
-  "count_intersection": 272942176.0, 
-  "count_union": 273016352.0, 
-  "count_seedless_guesses": 78767688.0, 
-  "count_seedless_gt": 78762184.0, 
-  "count_seedless_intersection": 78731656.0, 
-  "count_seedless_union": 78798056.0
+  "count_guesses": 272979968, 
+  "count_gt": 272978784, 
+  "count_intersection": 272942176, 
+  "count_union": 273016352, 
+  "count_seedless_guesses": 78767688, 
+  "count_seedless_gt": 78762184, 
+  "count_seedless_intersection": 78731656, 
+  "count_seedless_union": 78798056
 }
 
 Aggregate Metrics:
@@ -281,9 +281,9 @@ Seedless metrics are ignoring any voxel in either the ground truth or the guess 
 
 Instead of averaging over all trials, we take the total counts and calculate the individual metrics. This will show a more accurate representation of the metrics.
 
-### Analysis
+## Analysis
 
-#### Uncertainty
+### Uncertainty
 
 First, I want to look at the uncertainty of differently shaded voxels, since there is a known phenomenon within the dataset called a "black spill." A black spill is a volume of voxels where the dye accidentally spilled into the surrounding area instead of just the cell membrane. These voxels can be extremely difficult to trace through because there is no indication of where membranes are.
 
@@ -297,19 +297,72 @@ Besides the anomaly of darkness = 0, we notice that the model only has uncertain
 
 This matches the theory that black spills cause uncertainty.
 
-#### Metrics Distribution
+### Metrics Distribution
 
-<p float="left">
-  <img src="https://github.com/BLimmie/eyewire_validator/blob/master/images/precision.png?raw=true" width="33%" title="" />
-  <img src="https://github.com/BLimmie/eyewire_validator/blob/master/images/recall.png?raw=true" width="33%" title="" />
-  <img src="https://github.com/BLimmie/eyewire_validator/blob/master/images/iou.png?raw=true" width="33%" title="" />
+Note on the following graphs: All integer counts are on a logarithmic scale to show detail of less accurate points which can be misleading. Proportions as a decimal between 0 and 1 are not logarithmically scaled.
+
+#### Precision/Recall/IOU Distribution
+
+<p float="center">
+  <img src="https://github.com/BLimmie/eyewire_validator/blob/master/images/precision.png?raw=true" width="32%" title="Sorry, there are too many of these graphs to create clever title texts" />
+  <img src="https://github.com/BLimmie/eyewire_validator/blob/master/images/recall.png?raw=true" width="32%" title="" />
+  <img src="https://github.com/BLimmie/eyewire_validator/blob/master/images/iou.png?raw=true" width="32%" title="" />
 </p>
 
-#### Loops = 1
+These distributions show that there are very few tasks where lwunet scores near 0. The scales of these graphs can be misleading, but less than 0.1% of data points have a recall below 0.95. The IOU distribution is a combination of precision and recall. Overall, the model is very accurate.
+
+#### Seedless Distribution
+
+<p float="center">
+  <img src="https://github.com/BLimmie/eyewire_validator/blob/master/images/s_precision.png?raw=true" width="32%" title="This graph originally had the same number of 0's as 1's, but I changed how precision is calculated for 0/0" />
+  <img src="https://github.com/BLimmie/eyewire_validator/blob/master/images/s_recall.png?raw=true" width="32%" title="" />
+  <img src="https://github.com/BLimmie/eyewire_validator/blob/master/images/s_iou.png?raw=true" width="32%" title="So did this" />
+</p>
+
+Taking out the seeds shows a more interesting underlying distribution that more accurately tests lwunet on voxels outside the seed. We notice that there are significantly more tasks with a precision of 0. This can be explained. The segmentation algorithm used in Eyewire causes a significant number of mergers, big and small, and players are encouraged to avoid tracing these in either neuron to avoid what's known as a duplicate cube, where a segment appears in the aggregate of 2 or more tasks. So on many occassions, there are large chunks of voxels that are not part of the aggregate but part of the neuron. The increase in precision scores of 0 are due to mergers occurring in the seed, where no new segments were added to the aggregate, but there are voxels that do belong to the neuron. The overall decrease in precision can be due to small mergers in an otherwise larger trace. Recall does not show the same reduction, and IOU is a combination of the two scores.
+
+#### Comparing General Metrics to Seedless Metrics
+
+<p float="center">
+  <img src="https://github.com/BLimmie/eyewire_validator/blob/master/images/sp_p_scatter.png?raw=true" width="32%" title="" />
+  <img src="https://github.com/BLimmie/eyewire_validator/blob/master/images/sr_r_scatter.png?raw=true" width="32%" title="Ooga Booga" />
+  <img src="https://github.com/BLimmie/eyewire_validator/blob/master/images/siou_iou_scatter.png?raw=true" width="32%" title="" />
+</p>
+
+Like our analysis in the seedless distributions in the section above, precision takes a large hit overall and can be explained. Recall shows a graph more consistent with our expectations, where there appears to be a line through (recall) = (seedless_recall). There are also a large number of tasks that increased their recall to 1, which means those tasks did not add additional segments to the seed, but lwunet didn't think all parts of the seed belonged to the ground truth even without a merger. IOU, again, is a combination of the two graphs.
+
+#### Comparing Volume of GT to Precision/Recall
+
+<p float="center">
+  <img src="https://github.com/BLimmie/eyewire_validator/blob/master/images/gt_precision.png?raw=true" width="49%" title="" />
+  <img src="https://github.com/BLimmie/eyewire_validator/blob/master/images/gt_recall.png?raw=true" width="49%" title="" />
+</p>
+
+As we expect, precision and recall are unstable metrics when there are fewer voxels in the aggregate. We notice a weird anomaly in recall where there are several hundred points with lower recall than the curve. I have a hunch this is due to downsampling the image and thus some aggregates' volumes becoming smaller due to the lack of information about nubs (small branches in a neuron, not extending past the cube). Nub filled tasks tend to have a neuron that extends through the cube, which results in gt volumes similar to that patch in recall.
+
+#### Comparing Seedless Volume of GT to Seedless Precision/Recall
+
+<p float="center">
+  <img src="https://github.com/BLimmie/eyewire_validator/blob/master/images/gt_precision_seedless.png?raw=true" width="49%" title="" />
+  <img src="https://github.com/BLimmie/eyewire_validator/blob/master/images/gt_recall_seedless.png?raw=true" width="49%" title="I would fix the scaling on this stupid graph, but that means modifying my code" />
+</p>
+
+Precision, like past analysis gets pulled down a lot due to mergers, especially in smaller traces. Recall does not show a noticeable difference in the graph. 
+
+#### Comparing Volume Guessed to Correctly Guessed Volume
+
+<p float="center">
+  <img src="https://github.com/BLimmie/eyewire_validator/blob/master/images/guess_intersection.png?raw=true" width="49%" title="Put enough dots on a line, and you create, well, a line" />
+  <img src="https://github.com/BLimmie/eyewire_validator/blob/master/images/guess_intersection_seedless.png?raw=true" width="49%" title="Oh no! The line broke :(" />
+</p>
+
+This is additional confirmation that lwunet is filling in the voxels not in the aggregate due to seed mergers. We can see that there is a almost perfect correlation between total ground truth volume and guessed volume, but removing the seed shows a pattern of 0 additional voxels in the aggregate, but lwunet thinks there should be more voxels in the aggregate.
+
+### Loops = 1
 
 What happens if we only loop through the model once?
 
-```
+```json
 {
   "loss": 1.0000137200649821, 
   "precision": 0.9999090572150231, 
@@ -322,6 +375,12 @@ What happens if we only loop through the model once?
 ```
 
 We get better results? I guess the model is good enough on its first try that any additional tries, it second-guesses itself. We get such a small uncertainty on the first loop that a float rounds it to the minimum possible uncertainty. I think I like it when the model loops more because it can be more uncertain. The first loop essentially negates the necessity of bayesian deep learning, and we want our model to know when it can be wrong.
+
+## Conclusion
+
+In this project we introduce a lightweight U-Net that can be used on smaller 3D images. We also introduce the concept of Bayesian Deep Learning, which allows us to calculate the model's uncertainty. Using Bayesian Deep Learning on our lwunet, we manage to create a model that is able to propagate the seed of tasks in Eyewire to match as close as possible the trace of the neuron designated by the seed. We also realize how many mergers the current Eyewire segmentation algorithm actually creates, as removing them shows that lwunet appears to be less precise with its guesses. We also get confirmation that black spills cause lots of confusion in not only humans, but the model too. 
+
+There is a nontrivial mismatch between how this model creates output and how Eyewire actually plays, so automation attempts will have to do additional research on how to convert downsampled images to the segments displayed in Eyewire.
 
 ## Future Work
 
@@ -337,7 +396,7 @@ import numpy as np
 from model.model import lwunet
 ```
 
-2. Load the state on a machine that can access a CUDA GPU. CPU is highly not recommended and might cause problems when loading the model.
+2. Load the state on a machine that can access a CUDA GPU. CPU is highly not recommended and might cause problems when loading the model (Please create an issue if this happens. It should be fixed.).
 ```python
 state_dict = torch.load('state_dict.pth')
 ```
