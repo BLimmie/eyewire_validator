@@ -11,7 +11,7 @@ Note on the repository: This repository is meant to be a record of the various s
 </p>
 
 ## Abstract
-Eyewire is a citizen science game where players map individual neurons in a mouse's retina. Using a relatively new method of deep learning called Bayesian Deep Learning, I create an agent to approximate the individual tasks (a.k.a. cubes) that human players complete as part of Eyewire. The architecture used in the model is a recurrent encoder-decoder network for 3D images. 3D images pose a huge challenge in memory/size restrictions, so methods dealing with those had to be engineered.
+Eyewire is a citizen science game where players map individual neurons in a mouse's retina. Using a relatively new method of deep learning called Bayesian Deep Learning, I create an agent to approximate the individual tasks (a.k.a. cubes) that human players complete as part of Eyewire. 3D images pose a huge challenge in memory/size restrictions, so methods dealing with those had to be engineered.  The architecture used in the model is a recurrent lightweight U-Net for 3D images, and showed extremely good results.
 
 ## Purpose
 This project is designed as an introduction to Bayesian Deep Learning and an invitation to join citizen science efforts such as Eyewire.
