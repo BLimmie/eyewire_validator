@@ -343,6 +343,10 @@ Besides the anomaly of darkness = 0, we notice that the model only has uncertain
 
 This matches the theory that black spills cause uncertainty.
 
+**Uncertainty seems a bit low. Can you explain that?**
+
+The math behind the loss function makes small differences very important at both extremes of the scale. Dividing the logit output by a value of 1.002 can decrease the value of loss from a value of greater than 3 to around 1.5. When optimizing the model, this significant decrease in the loss function is where uncertainty plays the largest role, as we penalize larger uncertainties.
+
 ### Metrics Distribution
 
 Note on the following graphs: All integer counts are on a logarithmic scale to show detail of less accurate points which can be misleading. Proportions as a decimal between 0 and 1 are not logarithmically scaled.
