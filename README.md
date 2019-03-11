@@ -72,10 +72,25 @@ Here are a list of problems that are present in the current Eyewire Task Pipelin
   <img src="http://wiki.eyewire.org:88/images/thumb/9/9c/No_borders2.png/800px-No_borders2.png" title="Tracing mergers is the chaotic evil of Eyewire" />
 </p>
 
+## The Original Dataset
+
+The Eyewire API contains several endpoints that are reachable with either an access code or an account with sufficient permissions.
+
+Relevant endpoints:
+```
+http://eyewire.org/1.0/task/[:task_id:] # Get data about the task, used for getting volume id, filepath, seed, parent
+http://eyewire.org/1.0/task/[:task_id:]/aggregate # Get data about the task's aggregate
+http://eyewire.org/1.0/cell/[:cell_id:]/tasks # Get a list of tasks associated with a cell. Very useful in picking out tasks to gather data on
+```
+
+There is also a cell registry csv file circulated among the hobby devs within the community which I could parse through to get the available cells to download their data.
+
+Using the task endpoint, there are related urls to download the 256x256x256 image stack of each volume and the lzma compressed 1D uint16 segmentation file of each volume.
+
 ## Challenges
 Here are a list of challenges associated with this project
 
-* 3D images are incredibly large and consumes large amounts of memory. A 5 layer neural network transforming a 256^3 image into an output of size 256^3 does not fit on 12 GB of RAM.
+* 3D images are incredibly large and consumes large amounts of memory. A 5 layer neural network transforming a 256³ image into an output of size 256³ does not fit on 12 GB of RAM.
 
 * There are 2 million separate tasks across 56,300 volumes, across 3300 cells. Gathering the data is extremely time consuming and slows the servers hosting Eyewire, totaling 500 GB of data. The full E2198 Dataset is several TB.
 
@@ -137,9 +152,10 @@ async def func(list, *args):
              
   for result in results:
     #do things
+    pass
 
 if __name__ == "__main__":
-  list = [#things]
+  list = [things]
   loop = asyncio.get_event_loop()
   loop.run_until_complete(func(list))
 ```
@@ -151,7 +167,7 @@ def func_(val):
   time.sleep(n)
   return result
   
-list = [#things]
+list = [things]
 with multiprocessing.Pool(np) as p:
   results = list(tqdm.tqdm(p.imap(func, list), total=len(list))
 ```
@@ -159,6 +175,36 @@ with multiprocessing.Pool(np) as p:
 The asyncio is not controllable, so it is difficult to throttle the speed. Since the Eyewire API is connected to the game, HTTP requests slow down the game and data collection. This is when multiprocessing has to be used. Asyncio and multiprocessing were used in the data gathering step and preprocessing steps.
 
 tqdm is a library that displays pretty progress bars. I highly recommend it for any script dealing with large loops.
+
+## The Final Dataset
+
+After downsampling all the images/segmentations and removing tasks containing an empty seed, we are left with ~1.7 million data points across 56,326 3D images. Images are grayscale images of size 64x64x64, stored as lzma compressed 1D uint8 binary files. Segmentation files are lzma compressed 1D uint16 binary files. We also have two additional files used to store the data on individual tasks, task_data.json, and task_vol.json. These files are used to quickly get task data without needing to access the API, significantly speeding up training.
+
+After splitting up the dataset, ~1.5 million tasks are used for training, and ~145,700 tasks are used as a testing dataset. When training, we randomly sample a quarter of the training dataset because it takes too much time (128 hrs) to train on 1.5 million tasks.  
+
+### task_vol.json
+
+This file is a json object containing the mapping of tasks to volume IDs to easily index the images from the data directory. One sample data point in this file looks like:
+
+```json
+{
+  "588174": "123276"
+}
+```
+
+### task_data.json
+
+This file contains information about a task's seed, aggregate, and parent task. One sample data point in this file looks like:
+
+```json
+{
+  "1415863": {
+    "seed": [1473, 1528],
+    "parent": 1415862,
+    "aggregate": [1407, 1472, 1473, 1528]
+  }
+}
+```
 
 ## Bayesian Deep Learning
 
@@ -309,7 +355,7 @@ Note on the following graphs: All integer counts are on a logarithmic scale to s
   <img src="https://github.com/BLimmie/eyewire_validator/blob/master/images/iou.png?raw=true" width="32%" title="" />
 </p>
 
-These distributions show that there are very few tasks where lwunet scores near 0. The scales of these graphs can be misleading, but less than 0.1% of data points have a recall below 0.95. The IOU distribution is a combination of precision and recall. Overall, the model is very accurate.
+These distributions show that there are very few tasks where lwunet scores near 0. The scales of these graphs can be misleading, but less than 0.1% of data points have a recall below 0.95. The IOU distribution is a combination of precision and recall. Overall, the model is very accurate. There are a handful of tasks that have a seed but an empty GT as they were removed for being mergers. There are very few of these in the dataset, so they are left in for dataset noise, and they result in precisions of 0.
 
 #### Seedless Distribution
 
