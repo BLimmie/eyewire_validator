@@ -59,6 +59,7 @@ The idea of mergers caused by the segmentation algorithm is very important to wh
 
 <p align="center">
   <img src="http://wiki.eyewire.org:88/images/thumb/9/9c/No_borders2.png/800px-No_borders2.png" title="Tracing mergers is the chaotic evil of Eyewire" />
+  <br>
   Small portions of the light blue segment belong in the dark blue seed, but marking that segment is incorrect as it connects to a completely different neuron.
 </p>
 
