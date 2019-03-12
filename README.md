@@ -60,7 +60,7 @@ TL;DR
 * 1-2 Admins validate a whole neuron when it is done
 
 ## Motivation
-Here are a list of problems that are present in the current Eyewire Task Pipeline
+Here are a list of problems that are present in the current Eyewire Task Pipeline:
 
 * As seen from the Eyewire Task Pipeline, 6-7 people are required at minimum to look at a single task. This is a very time consuming process used to anonate petabytes of data, resulting in less than 10,000 total neurons being traced over the course of 7 years. 
 
@@ -446,7 +446,7 @@ import numpy as np
 from model.model import lwunet
 ```
 
-2. Load the state on a machine that can access a CUDA GPU. CPU is highly not recommended and might cause problems when loading the model (Please create an issue if this happens. It should be fixed.).
+2. Load the state on a machine that can access a CUDA GPU. CPU is highly not recommended and might cause problems when loading the model (Please create an issue if this happens. It should be fixed.)
 ```python
 state_dict = torch.load('state_dict.pth')
 ```
@@ -496,7 +496,7 @@ def run(img, seed, prev, target=None):
     return logits, sigma
 ```
 
-Prediction is based on the logits
+Prediction is based on the sign of logits.
 
 See [downsample_images.py](data_scripts/downsample_images.py) and [downsample_segment.py](data_scripts/downsample_segment.py) for examples in how to downsample segmentation and images from 256x256x256 to 64x64x64.
 
