@@ -45,7 +45,7 @@ Eyewire is a citizen science game designed to collect data about individual neur
 </p>
 
 ### The Eyewire Task Pipeline
-In Eyewire, players are given a 256x256x256 segmented 3D image (called a cube) containing a set of seed segments propogated from previous tasks. Players are to propogate (a.k.a. tracing) the seed and find the missing segments in the cube, giving Eyewire the nickname "adult coloring." As players play individual cubes, their traces are aggregated into a consensus and marked as the combined trace of the playerbase.
+In Eyewire, players are given a 256x256x256 segmented 3D image (called a cube) containing a set of seed segments propagated from previous tasks. Players are to propagate (a.k.a. tracing) the seed and find the missing segments in the cube, giving Eyewire the nickname "adult coloring." As players play individual cubes, their traces are aggregated into a consensus and marked as the combined trace of the playerbase.
 
 <p align="center">
   <img src="http://wiki.eyewire.org:88/images/thumb/4/4a/1.png/800px-1.png" title="Now that you know how to play, go join the Eyewire community" />
@@ -66,7 +66,7 @@ Here are a list of problems that are present in the current Eyewire Task Pipelin
 
 * The segmentation algorithm used to generate the cubes is, although quite robust, still rudimentary as it does not take into account the full range of data that is provided by the Eyewire Dataset. 
 
-* The segmentation algorithm's errors propogate to the players. There are many instances of mergers through the dataset, causing players to mistakenly add additional segments to a trace. The default procedure is to remove all segments that contain significant mergers to avoid multiple segments being classified as part of 2 different neurons.
+* The segmentation algorithm's errors propagate to the players. There are many instances of mergers through the dataset, causing players to mistakenly add additional segments to a trace. The default procedure is to remove all segments that contain significant mergers to avoid multiple segments being classified as part of 2 different neurons.
 
 <p align="center">
   <img src="http://wiki.eyewire.org:88/images/thumb/9/9c/No_borders2.png/800px-No_borders2.png" title="Tracing mergers is the chaotic evil of Eyewire" />
