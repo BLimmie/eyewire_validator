@@ -90,13 +90,13 @@ Using the task endpoint, there are related urls to download the 256x256x256 imag
 ## Challenges
 Here are a list of challenges associated with this project
 
-* 3D images are incredibly large and consumes large amounts of memory. A 5 layer neural network transforming a 256³ image into an output of size 256³ does not fit on 12 GB of RAM.
+* 3D images are incredibly large and consume large amounts of memory. A 5 layer neural network transforming a 256³ image into an output of size 256³ does not fit on 12 GB of RAM.
 
 * There are 2 million separate tasks across 56,300 volumes, across 3300 cells. Gathering the data is extremely time consuming and slows the servers hosting Eyewire, totaling 500 GB of data. The full E2198 Dataset is several TB.
 
 * Images are stored as 256 individual 2D images, making file transfers and image loading an extremely costly operation.
 
-* There is a subset of cells and images from the brain stems of a zebrafish that are not the same size as mouse's retina images.
+* There is a subset of cells and images from the brain stem of a zebrafish that are not the same size as those of a mouse retina.
 
 * External hard drive transfer speeds are capped so running scripts off it is time consuming. Windows also has this amazing feature that shuts off a hard drive if it uses too much power.
 
@@ -110,7 +110,7 @@ Here are a list of challenges associated with this project
 
 * I remove all zebrafish cells from the data. Eyewire is already developing an agent for this called MSTY.
 
-* I use my secondary laptop with lots of disk space to help preprocess some of the data
+* I use my secondary laptop with lots of disk space to help preprocess some of the data.
 
 ## Solutions
 
@@ -118,7 +118,7 @@ Here are a list of challenges associated with this project
 
 Segmentations of volumes are downsampled to a size of 64x64x64 by taking the max segment count in each subvolume of 4x4x4. This causes some tasks to not have any segments in the seed, so we have to remove those tasks. 
 
-Images are downsampled by taking the mean of each 4x4x4 block. Using skimage's downsample_local_mean function, we can quickly do that. 
+Images are downsampled by taking the mean of each 4x4x4 block. This is done using skimage's downsample_local_mean function. 
 
 <p float="left">
   <img src="https://storage.googleapis.com/e2198_compressed/Volume-71141-71142/jpg/0.jpg" width="49%" title="20/20 vision" />
@@ -172,7 +172,7 @@ with multiprocessing.Pool(np) as p:
   results = list(tqdm.tqdm(p.imap(func, list), total=len(list))
 ```
 
-The asyncio is not controllable, so it is difficult to throttle the speed. Since the Eyewire API is connected to the game, HTTP requests slow down the game and data collection. This is when multiprocessing has to be used. Asyncio and multiprocessing were used in the data gathering step and preprocessing steps.
+The asyncio is not controllable, so it is difficult to throttle the speed. Since the Eyewire API is connected to the game, HTTP requests slow down the game and data collection. This is when multiprocessing is a better alternative to asyncio. Asyncio and multiprocessing were used in the data gathering step and preprocessing steps.
 
 tqdm is a library that displays pretty progress bars. I highly recommend it for any script dealing with large loops.
 
@@ -208,13 +208,13 @@ This file contains information about a task's seed, aggregate, and parent task. 
 
 ## Bayesian Deep Learning
 
-Bayesian deep learning is new method of deep learning that deals with the problem of uncertainty. Take a model that tries to classify dogs and cats. What would the model output if it came across this image?
+Bayesian deep learning is a new method of deep learning that deals with the problem of uncertainty. Take a model that tries to classify dogs and cats. What would the model output if it came across this image?
 
 <p align="center">
   <img src="https://github.com/kyle-dorman/bayesian-neural-network-blogpost/blob/master/blog_images/catdog.png?raw=true" title="Dogcat? Catdog? Let's just call it a monster" />
 </p>
 
-Ideally, there would be a 3rd category that has a label of neither dog nor cat, but adding that label would cost additional data collection. The solution is for the model to output both the classification and an uncertainly value. We can train the model with a loss function that penalizes uncertainty (u) by adding log(u) to the loss function when the original prediction is adjusted for u. 
+Ideally, there would be a 3rd category that has a label of neither dog nor cat, but adding that label would cost additional data collection. The solution is for the model to output both the classification and an uncertainty value. We can train the model with a loss function that penalizes uncertainty (u) by adding log(u) to the loss function when the original prediction is adjusted for u. 
 
 In the case of binary classification, our output (ŷ) is within the range (0,1), and our uncertainty (u) is within the range \[1, inf). Our equations are given as follows:
 
@@ -245,7 +245,7 @@ The uncertainty term can even further be used to set a "maybe" threshold. If the
 
 ## The Model
 
-The model architecture is a recurrent lightweight U-Net ("lwunet" for short). It consists of 2 Conv3D/ReLU/MaxPool layers, of which the outputs gets concatenated to the 2 ConvTranspose3D/ReLU layers. The output of that is fed into two 1x1x1 Conv3D layers to calculate the predicted output and uncertainty of each pixel.
+The model architecture is a recurrent lightweight U-Net ("lwunet" for short). It consists of 2 Conv3D/ReLU/MaxPool layers, of which the outputs get concatenated to the 2 ConvTranspose3D/ReLU layers. The output of that is fed into two 1x1x1 Conv3D layers to calculate the predicted output and uncertainty of each pixel.
 
 <p align="center">
   <img src="https://i.imgur.com/0lV3Si8.png" title="This is so lightweight, it can actually fit on 12 GB of GPU RAM" />
@@ -305,7 +305,7 @@ Precision is the percentage of voxels the model predicted to be positive in the 
 
 #### Recall
 
-Recall is the percentage of ground truth positive voxels that the model managed to predict
+Recall is the percentage of ground truth positive voxels that the model managed to predict.
 
 <p align="center">
   <img src="https://i.imgur.com/Z1uDiuc.gif" title="Of all the arrows that hit the target, how many are yours?"/>
@@ -406,7 +406,7 @@ Precision, like past analysis gets pulled down a lot due to mergers, especially 
   <img src="https://github.com/BLimmie/eyewire_validator/blob/master/images/guess_intersection_seedless.png?raw=true" width="49%" title="Oh no! The line broke :(" />
 </p>
 
-This is additional confirmation that lwunet is filling in the voxels not in the aggregate due to seed mergers. We can see that there is a almost perfect correlation between total ground truth volume and guessed volume, but removing the seed shows a pattern of 0 additional voxels in the aggregate, but lwunet thinks there should be more voxels in the aggregate.
+This is additional confirmation that lwunet is filling in the voxels not in the aggregate due to seed mergers. We can see that there is an almost perfect correlation between total ground truth volume and guessed volume, but removing the seed shows a pattern of data points with 0 additional voxels in the aggregate, even if lwunet thinks there should be more voxels in the aggregate.
 
 ### Loops = 1
 
@@ -512,7 +512,8 @@ logits, sigma = logits.cpu().numpy(), sigma.cpu().numpy()
 * Eyewire: Providing the resources for this project
   * Amy Sterling: Connecting me to the development team, and for supporting me in building this project
   * Chris Jordan: Creating the OAuth API authentication for me to connect to the API without using a logged in browser and providing API documentation support
-  * Doug Bland: Moral support 
+  * Doug Bland: Moral support
+  * KrzysztofKruk: Providing the Cell Registry
 * Princeton University - Seung Laboratory: Maintaining Eyewire to be an awesome citizen science game and for developers to work on my requests
 * MIT: Building Eyewire
 * Professor Yu-Xiang Wang: Providing insight into segmentation and how to create a model for the purposes of propagating a seed
