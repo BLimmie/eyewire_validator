@@ -45,13 +45,24 @@ Eyewire is a citizen science game designed to collect data about individual neur
 </p>
 
 ### The Eyewire Task Pipeline
-In Eyewire, players are given a 256x256x256 segmented 3D image (called a cube) containing a set of seed segments propagated from previous tasks. Players are to propagate (a.k.a. tracing) the seed and find the missing segments in the cube, giving Eyewire the nickname "adult coloring." As players play individual cubes, their traces are aggregated into a consensus and marked as the combined trace of the playerbase.
+In Eyewire, players are given a 256x256x256 segmented 3D image (called a cube) containing a set of seed segments propagated from previous tasks. These segments are created using Eyewire's segmentation algorithm. Players are to propagate (a.k.a. tracing) the seed and find the missing segments in the cube, giving Eyewire the nickname "adult coloring." As players play individual cubes, their traces are aggregated into a consensus and marked as the combined trace of the playerbase. This means that segments that have been traced by the majority of players show up in the consensus of a task.
 
 <p align="center">
   <img src="http://wiki.eyewire.org:88/images/thumb/4/4a/1.png/800px-1.png" title="Now that you know how to play, go join the Eyewire community" />
 </p>
 
-After 3 players have played a single cube, the cube is then marked to be checked by more established players known as Scythes. Scythes have full override powers of tasks, being able to fix any mistake that the consensus has. It takes 2 Scythes to mark a cube as complete. After a cube is marked as complete and a whole neuron has been traced, 1-2 administrators (Eyewire/Seung Lab employees) are tasked with validating the full trace again to make sure there are no mistakes. 
+After 3 players have played a single cube, the cube is then marked to be checked by more established players known as Scythes. Scythes have full override powers of tasks, being able to fix any mistake that the consensus has. It takes 2 Scythes to mark a cube as complete. After a cube is marked as complete and a whole neuron has been traced, 1-2 administrators (Eyewire/Seung Lab employees) are tasked with validating the full trace again to make sure there are no mistakes. In this writeup, we call the final consensus the *aggregate*, since it aggregates ordinary player traces and scythe/admin validations. 
+
+#### Mergers
+
+The idea of mergers caused by the segmentation algorithm is very important to why this project is not looking to create an explicit agent to play Eyewire. Mergers are caused mistakes by the segmentation algorithm that incorrectly places several groups of voxels in the same segment when some of the voxels belong to a completely separate neuron than the one currently being traced. We call the segments containing voxels in two different neurons *mergers*.
+
+<p align="center">
+  <img src="http://wiki.eyewire.org:88/images/thumb/9/9c/No_borders2.png/800px-No_borders2.png" title="Tracing mergers is the chaotic evil of Eyewire" />
+  Small portions of the light blue segment belong in the dark blue seed, but marking that segment is incorrect as it connects to a completely different neuron.
+</p>
+
+The default action for players encountering mergers is to not trace them at all, no matter how small, as that error can mess with the propagation algorithm that spawns new tasks. There are some exceptions which this write up will not go into, so in most cases, segments that are considered mergers should not be part of any aggregate.
 
 ### The Eyewire Task Pipeline Summary
 TL;DR
@@ -67,10 +78,6 @@ Here are a list of problems that are present in the current Eyewire Task Pipelin
 * The segmentation algorithm used to generate the cubes is, although quite robust, still rudimentary as it does not take into account the full range of data that is provided by the Eyewire Dataset. 
 
 * The segmentation algorithm's errors propagate to the players. There are many instances of mergers through the dataset, causing players to mistakenly add additional segments to a trace. The default procedure is to remove all segments that contain significant mergers to avoid multiple segments being classified as part of 2 different neurons.
-
-<p align="center">
-  <img src="http://wiki.eyewire.org:88/images/thumb/9/9c/No_borders2.png/800px-No_borders2.png" title="Tracing mergers is the chaotic evil of Eyewire" />
-</p>
 
 ## The Original Dataset
 
