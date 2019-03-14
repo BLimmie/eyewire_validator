@@ -444,6 +444,7 @@ There is a nontrivial mismatch between how this model creates output and how Eye
 
 * Switch model/loss to Monte Carlo Simulations and test
 * Update with aggregate metrics for loop=1 (the p2.xlarge server used to run this is starting to empty my wallet)
+* Try a Reinforcement Learning Algorithm that uses Graph Convolutions (Similar to current segmentation)
 
 ## How to use the model independently
 
