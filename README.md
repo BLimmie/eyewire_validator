@@ -76,6 +76,8 @@ Here are a list of problems that are present in the current Eyewire Task Pipelin
 
 * As seen from the Eyewire Task Pipeline, 6-7 people are required at minimum to look at a single task. This is a very time consuming process used to anonate petabytes of data, resulting in less than 10,000 total neurons being traced over the course of 7 years. 
 
+* There is much more data to use to create segmentation algorithms now than when E2198 was segmented, so I want to take advantage of that.
+
 * The segmentation algorithm's errors propagate to the players. There are many instances of mergers through the dataset, causing players to mistakenly add additional segments to a trace. The default procedure is to remove all segments that contain significant mergers to avoid multiple segments being classified as part of 2 different neurons.
 
 ## The Original Dataset
