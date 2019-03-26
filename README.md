@@ -76,8 +76,6 @@ Here are a list of problems that are present in the current Eyewire Task Pipelin
 
 * As seen from the Eyewire Task Pipeline, 6-7 people are required at minimum to look at a single task. This is a very time consuming process used to anonate petabytes of data, resulting in less than 10,000 total neurons being traced over the course of 7 years. 
 
-* The segmentation algorithm used to generate the cubes is, although quite robust, still rudimentary as it does not take into account the full range of data that is provided by the Eyewire Dataset. 
-
 * The segmentation algorithm's errors propagate to the players. There are many instances of mergers through the dataset, causing players to mistakenly add additional segments to a trace. The default procedure is to remove all segments that contain significant mergers to avoid multiple segments being classified as part of 2 different neurons.
 
 ## The Original Dataset
@@ -100,7 +98,7 @@ Here are a list of challenges associated with this project
 
 * 3D images are incredibly large and consume large amounts of memory. A 5 layer neural network transforming a 256³ image into an output of size 256³ does not fit on 12 GB of RAM.
 
-* There are 2 million separate tasks across 56,300 volumes, across 3300 cells. Gathering the data is extremely time consuming and slows the servers hosting Eyewire, totaling 500 GB of data. The full E2198 Dataset is several TB.
+* There are 2 million separate tasks across 56,300 volumes, across 3300 cells. Gathering the data is extremely time consuming and slows the servers hosting Eyewire. Each 3D image contains 256 raw 2D images and a segmentation. The total disk space of all 3D images that contain at least 1 task is 500 GB.
 
 * Images are stored as 256 individual 2D images, making file transfers and image loading an extremely costly operation.
 
