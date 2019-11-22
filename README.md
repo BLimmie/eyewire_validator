@@ -35,7 +35,7 @@ This project is designed as an introduction to Bayesian Deep Learning and an inv
 Eyewire is a citizen science game designed to collect data about individual neurons in a mouse's retina. Originally designed to create a segmentation algorithm for mapping the human brain, it has evolved into a complex data collection system based on the idea that getting ordinary people to play a game designed around annotating data creates a cost-effective way of annotating data that doesn't require the time and effort of people within the laboratories using the data nor the costly delegation of data annotation to services like Mechanical Turk. Currently, there are just over 3000 mouse neurons fully mapped within a 350×300×60 µm³ volume. At this point in time, the data collected by Eyewire has discovered 6 new specific neuron types and has made a new classification scheme for retinal neurons.
 
 <p align="center">
-  <img src="http://wiki.eyewire.org:88/images/thumb/0/05/Countdown.png/800px-Countdown.png" title= "Remove the cell bodies and you get random noise" />
+  <img src="http://wiki.eyewire.org/images/thumb/0/05/Countdown.png/800px-Countdown.png" title= "Remove the cell bodies and you get random noise" />
   <br>
   245 of the 3000+ neurons mapped with blood vessels
   <br><br>
@@ -48,7 +48,7 @@ Eyewire is a citizen science game designed to collect data about individual neur
 In Eyewire, players are given a 256x256x256 segmented 3D image (called a cube) containing a set of seed segments propagated from previous tasks. These segments are created using Eyewire's segmentation algorithm. Players are to propagate (a.k.a. tracing) the seed and find the missing segments in the cube, giving Eyewire the nickname "adult coloring." As players play individual cubes, their traces are aggregated into a consensus and marked as the combined trace of the playerbase. This means that segments that have been traced by the majority of players show up in the consensus of a task.
 
 <p align="center">
-  <img src="http://wiki.eyewire.org:88/images/thumb/4/4a/1.png/800px-1.png" title="Now that you know how to play, go join the Eyewire community" />
+  <img src="http://wiki.eyewire.org/images/thumb/4/4a/1.png/800px-1.png" title="Now that you know how to play, go join the Eyewire community" />
 </p>
 
 After 3 players have played a single cube, the cube is then marked to be checked by more established players known as Scythes. Scythes have full override powers of tasks, being able to fix any mistake that the consensus has. It takes 2 Scythes to mark a cube as complete. After a cube is marked as complete and a whole neuron has been traced, 1-2 administrators (Eyewire/Seung Lab employees) are tasked with validating the full trace again to make sure there are no mistakes. In this writeup, we call the final consensus the *aggregate*, since it aggregates ordinary player traces and scythe/admin validations. 
@@ -58,7 +58,7 @@ After 3 players have played a single cube, the cube is then marked to be checked
 The idea of mergers caused by the segmentation algorithm is very important to why this project is not looking to create an explicit agent to play Eyewire. Mergers are caused mistakes by the segmentation algorithm that incorrectly places several groups of voxels in the same segment when some of the voxels belong to a completely separate neuron than the one currently being traced. We call the segments containing voxels in two different neurons *mergers*.
 
 <p align="center">
-  <img src="http://wiki.eyewire.org:88/images/thumb/9/9c/No_borders2.png/800px-No_borders2.png" title="Tracing mergers is the chaotic evil of Eyewire" />
+  <img src="http://wiki.eyewire.org/images/thumb/9/9c/No_borders2.png/800px-No_borders2.png" title="Tracing mergers is the chaotic evil of Eyewire" />
   <br>
   Small portions of the light blue segment belong in the dark blue seed, but marking that segment is incorrect as it connects to a completely different neuron.
 </p>
